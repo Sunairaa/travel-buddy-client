@@ -1,14 +1,16 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import routes from "./config/routes";
+import Navbar from "../src/components/Navbar";
+import Signup from "../src/pages/Signup";
+import Login from "../src/pages/Login";
 
 function App() {
   return (
     <div className="App">
+      <Navbar />
       <Routes>
-        {routes({}).map((route) => (
-          <Route key={route.path} path={route.path} element={route.element} />
-        ))}
+        <Route path="/signup" element={ <Signup/> } />
+        <Route path="/login" element={ <Login /> } />
       </Routes>
     </div>
   );
