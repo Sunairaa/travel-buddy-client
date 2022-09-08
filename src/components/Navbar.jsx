@@ -108,10 +108,10 @@ const Navbar = () => {
               {isLoggedIn && (
                 <div>
                     <MenuItem onClick={handleCloseNavMenu}>
-                        <NavLink to="/"> <Button variant="text" sx={{ my: 2, color: 'black', display: 'block' }}>Home</Button> </NavLink>
+                        <NavLink to="/" className={({ isActive }) => isActive ? "selected" : ""}> <Button variant="text" sx={{ my: 2, color: 'black', display: 'block' }}>Home</Button> </NavLink>
                     </MenuItem>
                     <MenuItem onClick={handleCloseNavMenu}>
-                        <NavLink to="/"> <Button variant="text" sx={{ my: 2, color: 'black', display: 'block' }}>Itenaries</Button> </NavLink>
+                        <NavLink to="/" className={({ isActive }) => isActive ? "selected" : ""}> <Button variant="text" sx={{ my: 2, color: 'black', display: 'block' }}>Itenaries</Button> </NavLink>
                     </MenuItem>
               </div>
               )}
@@ -125,20 +125,7 @@ const Navbar = () => {
                 </MenuItem>
               </div>
               )}
-        {/* {isLoggedIn && (
-        <>
-         <Link to="/"> <Button variant="text" sx={{ my: 2, color: 'black', display: 'block' }}>Home</Button> </Link>
-         <Link to="/"> <Button variant="text" sx={{ my: 2, color: 'black', display: 'block' }}>Itenaries</Button> </Link>
-        </>
-      )} */}
-{/*  
-      {!isLoggedIn && (
-        <>
-         <Link to="/signup"> <Button variant="text" sx={{ my: 2, color: 'black', display: 'block' }}>Sign Up</Button> </Link>
-         <Link to="/login"> <Button variant="text" sx={{ my: 2, color: 'black', display: 'block' }}>Login</Button> </Link>
-        </>
-      )} */}
-                
+             
             </Menu>
           </Box>
           <FlightIcon sx={{ display: { xs: 'flex', md: 'none' }, color: '#FFBD59', mr: 1 }} />
@@ -161,25 +148,13 @@ const Navbar = () => {
             TRAVEL BUDDY
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-          {/* {isLoggedIn && (
-        <>
-         <Link to="/"> <Button variant="text" sx={{ my: 2, color: 'white', display: 'block' }}>Home</Button> </Link>
-         <Link to="/"> <Button variant="text" sx={{ my: 2, color: 'white', display: 'block' }}>Itenaries</Button> </Link>
-        </>
-      )}
- 
-      {!isLoggedIn && (
-        <>
-         <Link to="/signup"> <Button variant="text" sx={{ my: 2, color: 'white', display: 'block' }}>Sign Up</Button> </Link>
-         <Link to="/login"> <Button variant="text" sx={{ my: 2, color: 'white', display: 'block' }}>Login</Button> </Link>
-        </>
-      )} */}
+     
       {isLoggedIn && (
                 <>
            
-              <Link to="/"> <Button variant="text" sx={{ my: 2, color: 'white', display: 'block' }}>Home</Button> </Link>
+              <NavLink to="/" className={({ isActive }) => isActive ? "selected" : ""}> <Button variant="text" sx={{ my: 2, color: 'white', display: 'block' }}>Home</Button> </NavLink>
              
-              <Link to="/"> <Button variant="text" sx={{ my: 2, color: 'white', display: 'block' }}>Itenaries</Button> </Link>
+              <NavLink to="/" className={({ isActive }) => isActive ? "selected" : ""}> <Button variant="text" sx={{ my: 2, color: 'white', display: 'block' }}>Itenaries</Button> </NavLink>
             
               </>
               )}
@@ -192,15 +167,7 @@ const Navbar = () => {
             
               </>
               )}
-            {/* {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))} */}
+          
           </Box>
 
           {isLoggedIn && (
@@ -243,8 +210,6 @@ const Navbar = () => {
             </Menu>
           </Box>
           )}
-
-          
         </Toolbar>
       </Container>
     </AppBar>
