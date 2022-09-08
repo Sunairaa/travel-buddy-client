@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { Link } from "react-router-dom";
+import { useContext } from "react";                     
+import { AuthContext } from "../context/auth.context";  
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -14,18 +16,20 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import FlightIcon from '@mui/icons-material/Flight';
 // import logo from '../../src/logo.png';
-import user from '../../src/user.png';
+import useravatar from '../../src/user.png';
 
 
 
 // const pages = ['Login', 'Sign Up'];
-const settings = ['Profile', 'Logout'];
+// const settings = ['Profile', 'Logout'];
 
 const Navbar = () => {
-//   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-//   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+   
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+   // Subscribe to the AuthContext to gain access to
+  // the values from AuthContext.Provider `value` prop
+  const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -101,8 +105,40 @@ const Navbar = () => {
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))} */}
-                <Link to="/signup"> <Button variant="text" sx={{ my: 2, color: 'black', display: 'block' }}>Sign Up</Button> </Link>
-                <Link to="/login"> <Button variant="text" sx={{ my: 2, color: 'black', display: 'block' }}>Login</Button> </Link>
+              {isLoggedIn && (
+                <div>
+                    <MenuItem onClick={handleCloseNavMenu}>
+                        <Link to="/"> <Button variant="text" sx={{ my: 2, color: 'black', display: 'block' }}>Home</Button> </Link>
+                    </MenuItem>
+                    <MenuItem onClick={handleCloseNavMenu}>
+                        <Link to="/"> <Button variant="text" sx={{ my: 2, color: 'black', display: 'block' }}>Itenaries</Button> </Link>
+                    </MenuItem>
+              </div>
+              )}
+              {!isLoggedIn && (
+                <div>
+                <MenuItem onClick={handleCloseNavMenu}>
+                    <Link to="/signup"> <Button variant="text" sx={{ my: 2, color: 'black', display: 'block' }}>Sign Up</Button> </Link>
+                </MenuItem>
+                <MenuItem onClick={handleCloseNavMenu}>
+                    <Link to="/login"> <Button variant="text" sx={{ my: 2, color: 'black', display: 'block' }}>Login</Button> </Link>
+                </MenuItem>
+              </div>
+              )}
+        {/* {isLoggedIn && (
+        <>
+         <Link to="/"> <Button variant="text" sx={{ my: 2, color: 'black', display: 'block' }}>Home</Button> </Link>
+         <Link to="/"> <Button variant="text" sx={{ my: 2, color: 'black', display: 'block' }}>Itenaries</Button> </Link>
+        </>
+      )} */}
+{/*  
+      {!isLoggedIn && (
+        <>
+         <Link to="/signup"> <Button variant="text" sx={{ my: 2, color: 'black', display: 'block' }}>Sign Up</Button> </Link>
+         <Link to="/login"> <Button variant="text" sx={{ my: 2, color: 'black', display: 'block' }}>Login</Button> </Link>
+        </>
+      )} */}
+                
             </Menu>
           </Box>
           <FlightIcon sx={{ display: { xs: 'flex', md: 'none' }, color: '#FFBD59', mr: 1 }} />
@@ -125,9 +161,37 @@ const Navbar = () => {
             TRAVEL BUDDY
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-          <Link to="/signup"> <Button variant="text" sx={{ my: 2, color: 'white', display: 'block' }}>Sign Up</Button> </Link>
-          <Link to="/login"> <Button variant="text" sx={{ my: 2, color: 'white', display: 'block' }}>Login</Button> </Link>
+          {/* {isLoggedIn && (
+        <>
+         <Link to="/"> <Button variant="text" sx={{ my: 2, color: 'white', display: 'block' }}>Home</Button> </Link>
+         <Link to="/"> <Button variant="text" sx={{ my: 2, color: 'white', display: 'block' }}>Itenaries</Button> </Link>
+        </>
+      )}
+ 
+      {!isLoggedIn && (
+        <>
+         <Link to="/signup"> <Button variant="text" sx={{ my: 2, color: 'white', display: 'block' }}>Sign Up</Button> </Link>
+         <Link to="/login"> <Button variant="text" sx={{ my: 2, color: 'white', display: 'block' }}>Login</Button> </Link>
+        </>
+      )} */}
+      {isLoggedIn && (
+                <>
+           
+              <Link to="/"> <Button variant="text" sx={{ my: 2, color: 'white', display: 'block' }}>Home</Button> </Link>
+             
+              <Link to="/"> <Button variant="text" sx={{ my: 2, color: 'white', display: 'block' }}>Itenaries</Button> </Link>
+            
+              </>
+              )}
+              {!isLoggedIn && (
+                <>
+           
+              <Link to="/signup"> <Button variant="text" sx={{ my: 2, color: 'white', display: 'block' }}>Sign Up</Button> </Link>
               
+              <Link to="/login"> <Button variant="text" sx={{ my: 2, color: 'white', display: 'block' }}>Login</Button> </Link>
+            
+              </>
+              )}
             {/* {pages.map((page) => (
               <Button
                 key={page}
@@ -144,7 +208,7 @@ const Navbar = () => {
               <IconButton 
               onClick={handleOpenUserMenu}
                sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src={user} />
+                <Avatar alt="Remy Sharp" src={useravatar} />
               </IconButton>
             </Tooltip>
             <Menu
@@ -163,11 +227,18 @@ const Navbar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
+              {/* {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
-              ))}
+              ))} */}
+
+                <MenuItem onClick={handleCloseUserMenu}>
+                    <Button variant="text">Profile</Button>
+                </MenuItem>
+                <MenuItem onClick={handleCloseUserMenu}>
+                    <Button variant="text" onClick={logOutUser}>Logout</Button>
+                </MenuItem>
             </Menu>
           </Box>
         </Toolbar>
