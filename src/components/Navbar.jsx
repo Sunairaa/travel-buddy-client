@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useContext } from "react";                     
 import { AuthContext } from "../context/auth.context";  
 import AppBar from '@mui/material/AppBar';
@@ -108,10 +108,10 @@ const Navbar = () => {
               {isLoggedIn && (
                 <div>
                     <MenuItem onClick={handleCloseNavMenu}>
-                        <Link to="/"> <Button variant="text" sx={{ my: 2, color: 'black', display: 'block' }}>Home</Button> </Link>
+                        <NavLink to="/"> <Button variant="text" sx={{ my: 2, color: 'black', display: 'block' }}>Home</Button> </NavLink>
                     </MenuItem>
                     <MenuItem onClick={handleCloseNavMenu}>
-                        <Link to="/"> <Button variant="text" sx={{ my: 2, color: 'black', display: 'block' }}>Itenaries</Button> </Link>
+                        <NavLink to="/"> <Button variant="text" sx={{ my: 2, color: 'black', display: 'block' }}>Itenaries</Button> </NavLink>
                     </MenuItem>
               </div>
               )}
@@ -203,8 +203,9 @@ const Navbar = () => {
             ))} */}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
+          {isLoggedIn && (
+            <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title={user && user.name}>
               <IconButton 
               onClick={handleOpenUserMenu}
                sx={{ p: 0 }}>
@@ -241,6 +242,9 @@ const Navbar = () => {
                 </MenuItem>
             </Menu>
           </Box>
+          )}
+
+          
         </Toolbar>
       </Container>
     </AppBar>
