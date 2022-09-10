@@ -119,7 +119,7 @@ export default function SignUp() {
               Sign Up
             </Button>
             { errorMessage && <p className="error-message">{errorMessage}</p> }
-            <Grid container justifyContent="flex-end">
+            <Grid container justifyContent="center">
               <Grid item>
                 <Link to="/login" variant="body2" sx={{ textDecoration: "none", color: "#26475E"}}>
                   Already have an account? Login

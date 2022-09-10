@@ -5,12 +5,15 @@ import Signup from "../src/pages/Signup";
 import Login from "../src/pages/Login";
 import IsAnon from "./components/IsAnon";
 import Home from "./pages/Home";
+import NewItinerary from "./pages/NewItinerary";
+
 function App() {
   return (
     <div className="App">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home /> } />
+        <Route path="/new-itinerary" element={<NewItinerary />} />
         <Route path="/signup" element={<IsAnon> <Signup /> </IsAnon>} />
         <Route path="/login" element={<IsAnon> <Login /> </IsAnon>} />
       </Routes>

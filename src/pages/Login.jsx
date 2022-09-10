@@ -115,13 +115,14 @@ export default function SignIn() {
             </Button>
             <Grid container>
             { errorMessage && <p className="error-message">{errorMessage}</p> }
+            
+              <Grid container justifyContent="center">
               <Grid item>
-                <Typography sx={{ alignItems: 'center', align:'center'}}>
                 <Link to="/signup" variant="body2" sx={{ textDecoration: "none", color: "#26475E"}}>
-                  {"Don't have an account? Sign Up"}
+                Don't have an account? Sign Up
                 </Link>
-                </Typography>
               </Grid>
+            </Grid>
             </Grid>
           </Box>
         </Box>
