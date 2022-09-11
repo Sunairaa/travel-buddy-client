@@ -3,6 +3,7 @@
   display: flex;
   height: 100vh;
   flex-direction: column;
+  font-family: 'Roboto', sans-serif;
 }
 
 .App-logo {
@@ -38,4 +39,12 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+a {
+  color: #26475e;
+}
+
+a:hover {
+  color: #4477c4;
 }

@@ -154,7 +154,7 @@ const Navbar = () => {
            
               <NavLink to="/" className={({ isActive }) => isActive ? "selected" : ""}> <Button variant="text" sx={{ my: 2, color: 'white', display: 'block' }}>Home</Button> </NavLink>
              
-              <NavLink to="/" className={({ isActive }) => isActive ? "selected" : ""}> <Button variant="text" sx={{ my: 2, color: 'white', display: 'block' }}>Itenaries</Button> </NavLink>
+              <NavLink to="/" className={({ isActive }) => isActive ? "selected" : ""}> <Button variant="text" sx={{ my: 2, color: 'white', display: 'block' }}>Itineraries</Button> </NavLink>
             
               </>
               )}
