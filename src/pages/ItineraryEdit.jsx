@@ -276,10 +276,16 @@ function ItineraryEdit() {
         // Get the token from the localStorage
         const storedToken = localStorage.getItem('authToken');
 
-            axios.get(`${API_URL}/api/itineraries/${itineraryId}`, { headers: { Authorization: `Bearer ${storedToken}` } })
+            axios.get(
+                `http://localhost:5005/api/itineraries/${itineraryId}`,
+                { headers: { Authorization: `Bearer ${storedToken}` } }
+              )
             .then((response) => {
-                const itineraryToEdit = response.data;
+                const itineraryToEdit = response.data.itinerary;
                 console.log(itineraryToEdit)
+                if(!response.data.isOwner) {
+                    navigate('/itineraries');
+                }
                 setTitle(itineraryToEdit.title)
                 setImageUrl(itineraryToEdit.imageUrl)
                 setDuration(itineraryToEdit.duration) 

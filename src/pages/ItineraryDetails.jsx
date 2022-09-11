@@ -2,9 +2,12 @@ import React from 'react'
 import { useState, useEffect} from 'react'
 import axios from 'axios'
 import {useParams} from 'react-router-dom'
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Button from '@mui/material/Button';
 
 function ItineraryDetails() {
   const [itinerary, setItinerary] = useState(null)
+  const [isOwner, setOwner] = useState(null)
   const {id} = useParams()
 
   useEffect(() => {
@@ -15,7 +18,8 @@ function ItineraryDetails() {
         { headers: { Authorization: `Bearer ${storedToken}` } }
       )
       .then(response => {
-        setItinerary(response.data)
+        setItinerary(response.data.itinerary)
+        setOwner(response.data.isOwner)
       })
       .catch(err => console.log(err))
 
@@ -90,6 +94,13 @@ function ItineraryDetails() {
             )
             })}
         </ul> */}
+        {isOwner && 
+          <ButtonGroup variant="contained" aria-label="outlined primary button group">
+            <Button>Edit</Button>
+            <Button>Delete</Button>
+          </ButtonGroup>
+        }
+        
     </div>
   )
 }
