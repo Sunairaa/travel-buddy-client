@@ -548,7 +548,7 @@ function NewItinerary() {
                                 fullWidth
                                 label="Name"
                                 name="name"
-                                value={hotelDetails.name}
+                                value={hotel.name}
                                 onChange={(event) => handleChangeHotelName(index, event)}
                                 />
                             </Grid>
@@ -559,7 +559,7 @@ function NewItinerary() {
                                     views={['day', 'month', 'year']}
                                     label="Check In"
                                     name="checkin"
-                                    value={hotelDetails.checkin}
+                                    value={hotel.checkin}
                                     onChange={(event) => handleChangeCheckin(index, event)}
                                     // onChange={(newValue) => {
                                     //     setValue(newValue);
@@ -575,7 +575,7 @@ function NewItinerary() {
                                     views={['day', 'month', 'year']}
                                     label="Check Out"
                                     name="checkout"
-                                    value={hotelDetails.checkout}
+                                    value={hotel.checkout}
                                     onChange={(event) => handleChangeCheckout(index, event)}
                                     renderInput={(params) => <TextField {...params} helperText={null} />}
                                     />
@@ -624,7 +624,7 @@ function NewItinerary() {
                                 fullWidth
                                 label="Title"
                                 name="title"
-                                value={activities.title}
+                                value={activity.title}
                                 onChange={(event) => handleChangeActivityDetail(index, event)}
                                 />
                             </Grid>
@@ -635,7 +635,7 @@ function NewItinerary() {
                                     views={['day', 'month', 'year']}
                                     label="Date"
                                     name="date"
-                                    value={activities.date}
+                                    value={activity.date}
                                     onChange={(event) => handleChangeActivityDate(index, event)}
                                     renderInput={(params) => <TextField {...params} helperText={null} />}
                                     />
@@ -645,7 +645,7 @@ function NewItinerary() {
                             <Grid item xs={6}>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <TimePicker
-                                    value={activities.time}
+                                    value={activity.time}
                                     name="time"
                                     label="Time "
                                     onChange={(event) => handleChangeActivityTime(index, event)}
@@ -661,7 +661,7 @@ function NewItinerary() {
                                 fullWidth
                                 label="Location"
                                 name="location"
-                                value={activities.location}
+                                value={activity.location}
                                 onChange={(event) => handleChangeActivityDetail(index, event)}
                                 />
                             </Grid>
@@ -673,7 +673,7 @@ function NewItinerary() {
                                 name="note"
                                 label="Notes"
                                 placeholder="Notes"
-                                value={activities.note}
+                                value={activity.note}
                                 onChange={(event) => handleChangeActivityDetail(index, event)}
                                 style={{ width: "100%", padding: "inherit", font: "inherit", borderRadius: "3px", borderColor: "#c4c4c4" }}
                                 />

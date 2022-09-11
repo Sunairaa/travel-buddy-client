@@ -17,7 +17,7 @@ function ItineraryCard({title, cities, user, imageUrl, notes, id}) {
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary" style={{textAlign:'end'}}>
-          By: {user && user.name}
+          By: {user.name}
         </Typography>
         <Link to={`/itineraries/${id}`}>
             <Typography gutterBottom variant="h4" component="div">
