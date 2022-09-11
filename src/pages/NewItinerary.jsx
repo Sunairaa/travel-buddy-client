@@ -258,8 +258,12 @@ function NewItinerary() {
             title, imageUrl, duration, countries, cities, flightDetails, hotelDetails, activities, notes, isPublic
         }
         console.log(body)
+        // Get the token from the localStorage
+        const storedToken = localStorage.getItem('authToken');
         try{
-            const addNewItinerary = await axios.post(`${API_URL}/api/itineraries`, body)
+            const addNewItinerary = await axios.post(`${API_URL}/api/itineraries`, 
+            body,
+            { headers: { Authorization: `Bearer ${storedToken}` } })
             console.log(addNewItinerary)
             // setTitle("")
             // setImageUrl("")
