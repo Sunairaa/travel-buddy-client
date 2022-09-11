@@ -8,8 +8,12 @@ function ItineraryDetails() {
   const {id} = useParams()
 
   useEffect(() => {
+    const storedToken = localStorage.getItem('authToken');
     axios
-      .get(`http://localhost:5005/api/itineraries/${id}`)
+      .get(
+        `http://localhost:5005/api/itineraries/${id}`,
+        { headers: { Authorization: `Bearer ${storedToken}` } }
+      )
       .then(response => {
         setItinerary(response.data)
       })
