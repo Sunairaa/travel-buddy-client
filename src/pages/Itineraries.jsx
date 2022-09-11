@@ -1,7 +1,9 @@
 import React from 'react'
 import { useState, useEffect} from 'react'
 import axios from 'axios'
-import {Link} from 'react-router-dom'
+import ItineraryCard from '../components/ItineraryCard'
+import { Grid } from '@mui/material'
+import Container from '@mui/material/Container';
 
 
 function Itineraries() {
@@ -18,26 +20,35 @@ function Itineraries() {
   }, [])
 
   return (
-    <div>
-      <h1>List of itineraries</h1>
-      {itineraries.map((itinerary) => {
-        return(
-          <div key={itinerary._id}>
-            <h3><Link to={`/itineraries/${itinerary._id}`}>{itinerary.title}</Link></h3>
-            <img src={itinerary.imageUrl} alt='itinerary pic'/>
-            <h3>Cities you will visit</h3>
-            <ol>
-              {itinerary.cities.map((city) => {
-                return(
-                  <li>{city}</li>
-                )
-              })}
-            </ol>
-            <h3>Recommendations:</h3>
-            <p>{itinerary.notes}</p>
-          </div>
-        )
-      })}
+    <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+      <Container maxWidth="xl">
+        <h1 style={{fontSize:'2.75em', fontWeight:'lighter'}}>List of itineraries</h1>
+        <Grid container spacing={6}
+          justifyContent="center"
+          alignItems="center"
+        >
+
+        {itineraries.map((itinerary) => {
+          return(
+            <Grid item xs={12} sm={12} md={6} xl={4}
+              display='flex'
+              justifyContent='center'
+              alignItems='center'
+              key={itinerary._id}
+            >
+              <ItineraryCard 
+                title={itinerary.title}
+                cities={itinerary.cities}
+                user={itinerary.user}
+                imageUrl={itinerary.imageUrl}
+                notes={itinerary.notes}
+                id={itinerary._id}
+              />
+            </Grid>
+          )
+        })}
+        </Grid>
+      </Container>
     </div>
   )
 }

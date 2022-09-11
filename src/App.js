@@ -27,7 +27,7 @@ function App() {
         <Route path='/itineraries' element={<Itineraries />}></Route>
         <Route path='/itineraries/:id' element={<ItineraryDetails />}></Route>
       </Routes>
-      <Footer></Footer>
+      <Footer />
     </div>
   );
 }
