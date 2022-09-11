@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -58,7 +58,7 @@ const countryData = Object.keys(Countries)
 let cityData = []
 
 const theme = createTheme();
-function NewItinerary() {
+function ItineraryEdit() {
     // title, imageUrl, duration, countries, cities, fliightDetails, hotelDetails, activities, notes, isPublic
     const [title, setTitle] = React.useState("");
     const [imageUrl, setImageUrl] = React.useState("");
@@ -72,6 +72,8 @@ function NewItinerary() {
     }]);
     const [notes, setNotes] = useState([]);
     const [isPublic, setPublic] = React.useState(false);
+    const [isLoading, setLoading] = React.useState(true);
+ 
     const ref = useRef(null);
     
 
@@ -249,6 +251,7 @@ function NewItinerary() {
         setNotes(values);
     }
 
+    const { itineraryId } = useParams();
     const handleNewItinerarySubmit = async (event) => {
         event.preventDefault();
         const body = {
@@ -258,29 +261,47 @@ function NewItinerary() {
         // Get the token from the localStorage
         const storedToken = localStorage.getItem('authToken');
         try{
-            const addNewItinerary = await axios.post(`${API_URL}/api/itineraries`, 
+            const updateItinerary = await axios.put(`${API_URL}/api/itineraries/${itineraryId}`, 
             body,
             { headers: { Authorization: `Bearer ${storedToken}` } })
-            console.log(addNewItinerary)
-            // setTitle("")
-            // setImageUrl("")
-            // setDuration("") 
-            // setCountries([])
-            // setCities([])
-            // setFlightDetails([])
-            // setHotelDetails([]) 
-            // setActivities({
-            //     title: "", date: dayjs(), time: dayjs(), location: "", note: "", imageUrl: ""
-            // })
-            // setNotes([])
-            // setPublic(false)
-            navigate('/')
+            navigate(`/itineraries/${itineraryId}`)
         }
         catch(err) {
             setErrorMessage(err)
         }
     };
 
+    
+    React.useEffect(() => {
+        // Get the token from the localStorage
+        const storedToken = localStorage.getItem('authToken');
+
+            axios.get(
+                `http://localhost:5005/api/itineraries/${itineraryId}`,
+                { headers: { Authorization: `Bearer ${storedToken}` } }
+              )
+            .then((response) => {
+                const itineraryToEdit = response.data.itinerary;
+                console.log(itineraryToEdit)
+                if(!response.data.isOwner) {
+                    navigate('/itineraries');
+                }
+                setTitle(itineraryToEdit.title)
+                setImageUrl(itineraryToEdit.imageUrl)
+                setDuration(itineraryToEdit.duration) 
+                setCountries(itineraryToEdit.countries)
+                setCities(itineraryToEdit.cities)
+                setFlightDetails(itineraryToEdit.flightDetails)
+                setHotelDetails(itineraryToEdit.hotelDetails)
+                setActivities(itineraryToEdit.activities)
+                setNotes(itineraryToEdit.notes)
+                setPublic(itineraryToEdit.isPublic)
+                setLoading(false)
+            })
+            .catch((err) => {
+                setErrorMessage(err)
+            })
+    }, [itineraryId])
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -297,7 +318,7 @@ function NewItinerary() {
             <LuggageIcon />
           </Avatar>
           <Typography component="h1" variant="h5" sx={{ mb: 3 }}>
-            New Itinerary
+            Edit Itinerary
           </Typography>
 
           {/* form */}
@@ -548,7 +569,7 @@ function NewItinerary() {
                                 fullWidth
                                 label="Name"
                                 name="name"
-                                value={hotelDetails.name}
+                                value={hotel.name}
                                 onChange={(event) => handleChangeHotelName(index, event)}
                                 />
                             </Grid>
@@ -559,11 +580,8 @@ function NewItinerary() {
                                     views={['day', 'month', 'year']}
                                     label="Check In"
                                     name="checkin"
-                                    value={hotelDetails.checkin}
+                                    value={hotel.checkin}
                                     onChange={(event) => handleChangeCheckin(index, event)}
-                                    // onChange={(newValue) => {
-                                    //     setValue(newValue);
-                                    // }}
                                     renderInput={(params) => <TextField {...params} helperText={null} />}
                                     />
                                 </LocalizationProvider>
@@ -575,7 +593,7 @@ function NewItinerary() {
                                     views={['day', 'month', 'year']}
                                     label="Check Out"
                                     name="checkout"
-                                    value={hotelDetails.checkout}
+                                    value={hotel.checkout}
                                     onChange={(event) => handleChangeCheckout(index, event)}
                                     renderInput={(params) => <TextField {...params} helperText={null} />}
                                     />
@@ -624,7 +642,7 @@ function NewItinerary() {
                                 fullWidth
                                 label="Title"
                                 name="title"
-                                value={activities.title}
+                                value={activity.title}
                                 onChange={(event) => handleChangeActivityDetail(index, event)}
                                 />
                             </Grid>
@@ -635,7 +653,7 @@ function NewItinerary() {
                                     views={['day', 'month', 'year']}
                                     label="Date"
                                     name="date"
-                                    value={activities.date}
+                                    value={activity.date}
                                     onChange={(event) => handleChangeActivityDate(index, event)}
                                     renderInput={(params) => <TextField {...params} helperText={null} />}
                                     />
@@ -645,7 +663,7 @@ function NewItinerary() {
                             <Grid item xs={6}>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <TimePicker
-                                    value={activities.time}
+                                    value={activity.time}
                                     name="time"
                                     label="Time "
                                     onChange={(event) => handleChangeActivityTime(index, event)}
@@ -661,7 +679,7 @@ function NewItinerary() {
                                 fullWidth
                                 label="Location"
                                 name="location"
-                                value={activities.location}
+                                value={activity.location}
                                 onChange={(event) => handleChangeActivityDetail(index, event)}
                                 />
                             </Grid>
@@ -673,7 +691,7 @@ function NewItinerary() {
                                 name="note"
                                 label="Notes"
                                 placeholder="Notes"
-                                value={activities.note}
+                                value={activity.note}
                                 onChange={(event) => handleChangeActivityDetail(index, event)}
                                 style={{ width: "100%", padding: "inherit", font: "inherit", borderRadius: "3px", borderColor: "#c4c4c4" }}
                                 />
@@ -777,7 +795,7 @@ function NewItinerary() {
               variant="contained"
               sx={{ mt: 3, mb: 2, bgcolor: "#26475E" }}
             >
-              Publish
+              Update
             </Button>
 
             { errorMessage && <p className="error-message">{errorMessage}</p> }
@@ -788,4 +806,4 @@ function NewItinerary() {
   );
 }
 
-export default NewItinerary;
+export default ItineraryEdit;
