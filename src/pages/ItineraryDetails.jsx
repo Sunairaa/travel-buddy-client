@@ -9,6 +9,8 @@ function ItineraryDetails() {
   const [itinerary, setItinerary] = useState(null)
   const [isOwner, setOwner] = useState(null)
   const {id} = useParams()
+  const defaultImageUrl = 'https://images.unsplash.com/photo-1499591934245-40b55745b905?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2372&q=80'
+
 
   useEffect(() => {
     const storedToken = localStorage.getItem('authToken');
@@ -33,7 +35,7 @@ function ItineraryDetails() {
     <div>
       <h1>Itinerary</h1>
         <h2>{itinerary.title}</h2>
-        <img src={itinerary.imageUrl} alt='itinerary pic'/>
+        <img src={itinerary.imageUrl || defaultImageUrl} alt='itinerary pic'/>
 
         <h3>Countries you will visit</h3>
         <ol>
@@ -85,15 +87,15 @@ function ItineraryDetails() {
         <p>{itinerary.notes}</p>
 
         <h3>Activities</h3>
-        {/* <ul>
+        <ul>
             {itinerary.activities.map((item) => {
             return(
                 <li>
-                <p>{item}</p>
+                <p>{item.title}</p>
                 </li>
             )
             })}
-        </ul> */}
+        </ul>
         {isOwner && 
           <ButtonGroup variant="contained" aria-label="outlined primary button group">
             <Button>Edit</Button>

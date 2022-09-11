@@ -8,6 +8,7 @@ import Container from '@mui/material/Container';
 
 function Itineraries() {
   const [itineraries, setItineraries] = useState([])
+  const defaultImageUrl = 'https://images.unsplash.com/photo-1499591934245-40b55745b905?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2372&q=80'
 
   useEffect(() => {
     axios
@@ -40,7 +41,7 @@ function Itineraries() {
                 title={itinerary.title}
                 cities={itinerary.cities}
                 user={itinerary.user}
-                imageUrl={itinerary.imageUrl}
+                imageUrl={itinerary.imageUrl || defaultImageUrl}
                 notes={itinerary.notes}
                 id={itinerary._id}
               />
