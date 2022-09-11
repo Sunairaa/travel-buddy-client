@@ -40,6 +40,7 @@ import {useRef} from 'react';
 import { v4 as uuidv4 } from 'uuid';
 // json data of countries and cities
 import Countries from '../Data/countries.json';
+import service from "../api/service";
 const API_URL = "http://localhost:5005";
 const ariaLabel = { 'aria-label': 'description' };
 
@@ -249,6 +250,26 @@ function NewItinerary() {
         setNotes(values);
     }
 
+    // ******** this method handles the file upload ********
+    const handleFileUpload = (e) => {
+    // console.log("The file to be uploaded is: ", e.target.files[0]);
+ 
+    const uploadData = new FormData();
+ 
+    // imageUrl => this name has to be the same as in the model since we pass
+    // req.body to .create() method when creating a new movie in '/api/movies' POST route
+    uploadData.append("imageUrl", e.target.files[0]);
+ 
+    service
+      .uploadImage(uploadData)
+      .then(response => {
+        // console.log("response is: ", response);
+        // response carries "fileUrl" which we can use to update the state
+        setImageUrl(response.fileUrl);
+      })
+      .catch(err => console.log("Error while uploading the file: ", err));
+    };
+
     const handleNewItinerarySubmit = async (event) => {
         event.preventDefault();
         const body = {
@@ -409,6 +430,7 @@ function NewItinerary() {
                         id="raised-button-file"
                         multiple
                         type="file"
+                        onChange={(e) => handleFileUpload(e)}
                         />
                         <label htmlFor="raised-button-file">
                             <Button variant="raised" component="span" sx={{ bgcolor: '#ffbd59'}} startIcon={<AddPhotoAlternateIcon />}>
@@ -416,17 +438,19 @@ function NewItinerary() {
                                 </Button>
                         </label> 
                 </Grid>
-
+                {imageUrl &&  
                 <Grid item container xs={12} justifyContent="flex-start" sx={{ pl: 2}}>
-                    <Card sx={{ maxWidth: 345 }}>
+                    <Card>
                         <CardMedia
                             component="img"
                             alt="image"
                             height="140"
-                            image="/static/images/cards/contemplative-reptile.jpg"
+                            image={imageUrl}
                         />
                     </Card>
                 </Grid>
+                }
+                
 
                 <Grid container item xs={12} justifyContent="flex-start">      
                     <Divider Divider textAlign="left" style={{width:'100%'}}>
