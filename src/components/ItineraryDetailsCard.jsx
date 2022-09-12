@@ -243,7 +243,7 @@ function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities,
                     time={activity.time}
                     location={activity.location}
                     notes={activity.note}
-                    imageUrl={activity.imageUrl || defaultImageUrl}
+                    imageUrl={activity.image || defaultImageUrl}
                     index={index}
                   />
                 </Grid>

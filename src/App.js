@@ -26,7 +26,7 @@ function App() {
         <Route path="/login" element={<IsAnon> <Login /> </IsAnon>} />
         <Route path='/profile' element={<Profile />}></Route>
         <Route path='/itineraries' element={<Itineraries />}></Route>
-        <Route path='/itineraries/:id' element={<ItineraryDetails />}></Route>
+        <Route path='/itineraries/:id' element={<IsPrivate> <ItineraryDetails /> </IsPrivate>}></Route>
       </Routes>
       <Footer />
     </div>

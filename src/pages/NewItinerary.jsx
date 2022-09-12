@@ -746,7 +746,7 @@ function NewItinerary() {
                                         </Button>
                                     </label>  */}
                                     <Button variant="raised" component="label" sx={{ bgcolor: '#ffbd59'}} startIcon={<AddPhotoAlternateIcon />}>
-                                        Upload
+                                        Image
                                         <input hidden accept="image/*" multiple type="file" name="image" onChange={(e) => handleActivityImageUpload(index, e)}/>
                                     </Button>
                             </Grid>
