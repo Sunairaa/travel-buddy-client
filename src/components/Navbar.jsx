@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useContext } from "react";                     
 import { AuthContext } from "../context/auth.context";  
 import AppBar from '@mui/material/AppBar';
@@ -27,6 +27,7 @@ const Navbar = () => {
    
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const navigate = useNavigate()
    // Subscribe to the AuthContext to gain access to
   // the values from AuthContext.Provider `value` prop
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
@@ -42,7 +43,17 @@ const Navbar = () => {
     setAnchorElNav(null);
   };
 
+  const handleProfileClick = () => {
+    navigate('/profile')
+    setAnchorElUser(null);
+  };
+
   const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
+  const handleLogoutClick = () => {
+    navigate('/')
     setAnchorElUser(null);
   };
 
@@ -176,7 +187,7 @@ const Navbar = () => {
               <IconButton 
               onClick={handleOpenUserMenu}
                sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src={useravatar} />
+                <Avatar alt="Remy Sharp" src={(user && user.imageUrl) || useravatar} />
               </IconButton>
             </Tooltip>
             <Menu
@@ -201,10 +212,10 @@ const Navbar = () => {
                 </MenuItem>
               ))} */}
 
-                <MenuItem onClick={handleCloseUserMenu}>
+                <MenuItem onClick={handleProfileClick}>
                     <Button variant="text">Profile</Button>
                 </MenuItem>
-                <MenuItem onClick={handleCloseUserMenu}>
+                <MenuItem onClick={handleLogoutClick}>
                     <Button variant="text" onClick={logOutUser}>Logout</Button>
                 </MenuItem>
             </Menu>

@@ -19,6 +19,6 @@ const uploadImage = (file) => {
     .catch(errorHandler);
 };
 
-export default {
-  uploadImage
-};
+const service = {uploadImage}
+
+export default service
