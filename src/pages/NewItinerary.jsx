@@ -69,7 +69,7 @@ function NewItinerary() {
     const [flightDetails, setFlightDetails] = React.useState([]);
     const [hotelDetails, setHotelDetails] = React.useState([]);
     const [activities, setActivities] = React.useState([{
-        title: "", date: dayjs(), time: dayjs(), location: "", note: "", imageUrl: ""
+        title: "", date: dayjs(), time: dayjs(), location: "", note: "", image: ""
     }]);
     const [notes, setNotes] = useState([]);
     const [isPublic, setPublic] = React.useState(false);
@@ -251,14 +251,16 @@ function NewItinerary() {
     }
 
     // ******** this method handles the file upload ********
-    const handleFileUpload = (e) => {
+    const handleItineraryImageUpload = (e) => {
+        console.log("Itinerary Image")
+
     // console.log("The file to be uploaded is: ", e.target.files[0]);
  
     const uploadData = new FormData();
  
-    // imageUrl => this name has to be the same as in the model since we pass
-    // req.body to .create() method when creating a new movie in '/api/movies' POST route
-    uploadData.append("imageUrl", e.target.files[0]);
+    // image => this name has to be the same as in the model since we pass
+    // req.body to .create() method when creating a new movie in '/api/itineraries' POST route
+    uploadData.append("image", e.target.files[0]);
  
     service
       .uploadImage(uploadData)
@@ -268,7 +270,33 @@ function NewItinerary() {
         setImageUrl(response.fileUrl);
       })
       .catch(err => console.log("Error while uploading the file: ", err));
+      
     };
+
+     // ******** this method handles the file upload ********
+     const handleActivityImageUpload = (index, e) => {
+        console.log("Activity Image")
+        // console.log("The file to be uploaded is: ", e.target.files[0]);
+     
+        const uploadData = new FormData();
+     
+        // imageUrl => this name has to be the same as in the model since we pass
+        // req.body to .create() method when creating a new movie in '/api/itineraries' POST route
+        uploadData.append("image", e.target.files[0]);
+     
+        service
+          .uploadImage(uploadData)
+          .then(response => {
+            // console.log("response is: ", response);
+            // response carries "fileUrl" which we can use to update the state
+            // setImageUrl(response.fileUrl);
+            let data = [...activities];
+            data[index]['image'] = response.fileUrl;
+            setActivities(data);
+            // console.log(event)
+          })
+          .catch(err => console.log("Error while uploading the file: ", err));
+        };
 
     const handleNewItinerarySubmit = async (event) => {
         event.preventDefault();
@@ -430,12 +458,12 @@ function NewItinerary() {
                         id="raised-button-file"
                         multiple
                         type="file"
-                        onChange={(e) => handleFileUpload(e)}
+                        onChange={(e) => handleItineraryImageUpload(e)}
                         />
                         <label htmlFor="raised-button-file">
                             <Button variant="raised" component="span" sx={{ bgcolor: '#ffbd59'}} startIcon={<AddPhotoAlternateIcon />}>
-                                            Image
-                                </Button>
+                                Image
+                            </Button>
                         </label> 
                 </Grid>
                 {imageUrl &&  
@@ -704,31 +732,39 @@ function NewItinerary() {
                             </Grid>
 
                             <Grid item container xs={12} justifyContent="flex-start" sx={{ pl: 2}}>
-                                <Input
+                                {/* <Input
                                     accept="image/*"
-                                    style={{ display: 'none' }}
+                                    // style={{ display: 'none' }}
                                     id="raised-button-file"
                                     multiple
-                                    // onChange={handleChange}
+                                    onChange={(e) => handleActivityImageUpload(index, e)}
                                     type="file"
                                     />
                                     <label htmlFor="raised-button-file">
                                         <Button variant="raised" component="span" sx={{ bgcolor: '#ffbd59'}} startIcon={<AddPhotoAlternateIcon />}>
                                             Image
                                         </Button>
-                                    </label> 
+                                    </label>  */}
+                                    <Button variant="raised" component="label" sx={{ bgcolor: '#ffbd59'}} startIcon={<AddPhotoAlternateIcon />}>
+                                        Upload
+                                        <input hidden accept="image/*" multiple type="file" name="image" onChange={(e) => handleActivityImageUpload(index, e)}/>
+                                    </Button>
                             </Grid>
 
-                            <Grid item container xs={12} justifyContent="flex-start" sx={{ pl: 2}}>
-                                <Card sx={{ maxWidth: 345 }}>
-                                    <CardMedia
-                                        component="img"
-                                        alt="image"
-                                        height="140"
-                                        image="/static/images/cards/contemplative-reptile.jpg"
-                                    />
-                                </Card>
-                            </Grid>
+                            {activity.image && 
+                                <Grid item container xs={12} justifyContent="flex-start" sx={{ pl: 2}}>
+                                    <Card sx={{ maxWidth: 345 }}>
+                                        <CardMedia
+                                            component="img"
+                                            alt="image"
+                                            height="140"
+                                            image={activity.image}
+                                            
+                                        />
+                                    </Card>
+                                </Grid>
+                            }
+                            
 
                             <Grid item container xs={12} justifyContent="flex-start" sx={{ pl: 2}}>
                                 <Button variant="outlined" onClick={() => handleDeleteActivity(index)}  color="error" startIcon={<CloseIcon />}>
