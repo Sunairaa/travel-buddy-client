@@ -84,9 +84,16 @@ function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities,
             }
             </>
           }
-          title={title}
-          subheader={`Duration of itinerary: ${duration} days`}
-        />
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h4" component="div" style={{color:'#26475e'}}>
+              {title}
+            </Typography>     
+            <Typography variant="body2" color="text.secondary">
+              {`Duration of itinerary: ${duration} days`}
+            </Typography>      
+          </CardContent>
+          
         <CardMedia
           component="img"
           alt="itinerary pic"
