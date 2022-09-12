@@ -1,6 +1,10 @@
 import React from 'react'
 import { useState, useEffect} from 'react'
 import axios from 'axios'
+import Card from '@mui/material/Card'
+import Typography from '@mui/material/Typography'
+import CardContent from '@mui/material/CardContent';
+import Avatar from '@mui/material/Avatar'
 
 
 function Profile() {
@@ -17,11 +21,17 @@ function Profile() {
   }, [])
 
   return (
-    <div>
-      <img src={user.imageUrl} alt='user face pic'/>
-      <h1>Name: {user.name}</h1>
-      <h2>Email: {user.email}</h2>
-    </div>
+    <Card style={{width:'90%'}}>
+      <CardContent>
+        <Avatar alt="Remy Sharp" src={user.imageUrl} />
+        <Typography variant="body2" color="text.secondary">
+          Name: {user.name}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Email: {user.email}
+        </Typography>
+      </CardContent>
+    </Card>
   )
 }
 

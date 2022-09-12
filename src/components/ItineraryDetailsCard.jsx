@@ -33,9 +33,11 @@ const ExpandMore = styled((props) => {
 }));
 
 function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities, countries, notes, flightDetails, hotelDetails, activities, id }) {
-  const [showFlights, setShowFlights] = React.useState(false);
-  const [showHotels, setShowHotels] = React.useState(false);
-  const [showActivities, setShowActivities] = React.useState(false);
+  const [showFlights, setShowFlights] = React.useState(true);
+  const [showHotels, setShowHotels] = React.useState(true);
+  const [showActivities, setShowActivities] = React.useState(true);
+  const [showRecommendations, setShowRecommendations] = React.useState(true);
+
   const navigate = useNavigate();
   const defaultImageUrl = 'https://images.unsplash.com/photo-1499591934245-40b55745b905?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2372&q=80'
 
@@ -51,6 +53,10 @@ function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities,
 
   const handleShowActivitiesClick = () => {
     setShowActivities(!showActivities);
+  };
+
+  const handleShowRecommendationsClick = () => {
+    setShowRecommendations(!showRecommendations);
   };
 
   const handleDeleteClick = () => {
@@ -132,10 +138,6 @@ function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities,
                   )
                 })}
               </ul>
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Recommendations: {notes}
-            <br/>
           </Typography>
         </CardContent>
         <CardContent>
@@ -246,6 +248,35 @@ function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities,
                   />
                 </Grid>
               ))}
+            </Grid>
+          </Collapse>
+          <Divider Divider textAlign="left" style={{width:'100%'}}>
+              RECOMMENDATIONS
+              <ExpandMore
+                expand={showRecommendations}
+                onClick={handleShowRecommendationsClick}
+                aria-expanded={showRecommendations}
+                aria-label="show more"
+              >
+                <ExpandMoreIcon />
+              </ExpandMore>
+          </Divider>
+          <Collapse in={showRecommendations} timeout="auto" unmountOnExit>
+            <Grid container spacing={6}
+              justifyContent="center"
+              alignItems="center"
+            >   
+                <Grid  
+                  item xs={12} sm={12} md={6} lg={4} xl={3}
+                  display='flex'
+                  justifyContent='flex-start'
+                  alignItems='center'
+                >
+                  <Typography variant="body2" color="text.secondary">
+                    Recommendations: {notes}
+                    <br/>
+                  </Typography>
+                </Grid>
             </Grid>
           </Collapse>
         </CardContent>
