@@ -4,6 +4,8 @@ import axios from 'axios'
 import {useParams} from 'react-router-dom'
 import ItineraryDetailsCard from '../components/ItineraryDetailsCard';
 
+const API_URL = process.env.REACT_APP_API_URL || "https://long-lime-bat-hose.cyclic.app";
+
 function ItineraryDetails() {
   const [itinerary, setItinerary] = useState(null)
   const [isOwner, setOwner] = useState(false)
@@ -15,7 +17,7 @@ function ItineraryDetails() {
     const storedToken = localStorage.getItem('authToken');
     axios
       .get(
-        `http://localhost:5005/api/itineraries/${id}`,
+        `${API_URL}/api/itineraries/${id}`,
         { headers: { Authorization: `Bearer ${storedToken}` } }
       )
       .then(response => {

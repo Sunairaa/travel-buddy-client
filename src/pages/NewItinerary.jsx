@@ -41,7 +41,7 @@ import { v4 as uuidv4 } from 'uuid';
 // json data of countries and cities
 import Countries from '../Data/countries.json';
 import service from "../api/service";
-const API_URL = "http://localhost:5005";
+const API_URL = process.env.REACT_APP_API_URL || "https://long-lime-bat-hose.cyclic.app";
 const ariaLabel = { 'aria-label': 'description' };
 
 const ITEM_HEIGHT = 48;

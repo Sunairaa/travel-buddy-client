@@ -5,6 +5,7 @@ import ItineraryCard from '../components/ItineraryCard'
 import { Grid } from '@mui/material'
 import Container from '@mui/material/Container';
 
+const API_URL = process.env.REACT_APP_API_URL || "https://long-lime-bat-hose.cyclic.app";
 
 function Itineraries() {
   const [itineraries, setItineraries] = useState([])
@@ -12,7 +13,7 @@ function Itineraries() {
 
   useEffect(() => {
     axios
-      .get('http://localhost:5005/api/itineraries')
+      .get(`${API_URL}/api/itineraries`)
       .then(response => {
         setItineraries(response.data)
       })

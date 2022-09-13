@@ -39,7 +39,7 @@ import Chip from '@mui/material/Chip';
 import {useRef} from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-const API_URL = "http://localhost:5005";
+const API_URL = process.env.REACT_APP_API_URL || "https://long-lime-bat-hose.cyclic.app";
 const ariaLabel = { 'aria-label': 'description' };
 
 const ITEM_HEIGHT = 48;
