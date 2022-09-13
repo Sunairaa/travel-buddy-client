@@ -21,20 +21,19 @@ function App() {
   return (
     <div className="App">
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Home /> } />
-        <Route path="/new-itinerary" element={<IsPrivate> <NewItinerary /> </IsPrivate>} />
-        <Route path="/itineraries/edit/:itineraryId" element={<IsPrivate> <ItineraryEdit /> </IsPrivate>}/>
-        <Route path="/signup" element={<IsAnon> <Signup /> </IsAnon>} />
-        <Route path="/login" element={<IsAnon> <Login /> </IsAnon>} />
-        <Route path='/profile' element={<Profile />}></Route>
-        <Route path='/profile/itineraries' element={<UserSpecificItineraries />}></Route>
-        <Route path='/itineraries' element={<Itineraries />}></Route>
-        <Route path='/itineraries/:id' element={<IsPrivate> <ItineraryDetails /> </IsPrivate>}></Route>
-        <Route path='/traveltips' element={ <TravelTips />}></Route>
-        <Route path="/new-travel-tip" element={<IsPrivate> <NewTravelTip /> </IsPrivate>} />
-
-      </Routes>
+        <Routes>
+          <Route path="/" element={<Home /> } />
+          <Route path="/new-itinerary" element={<IsPrivate> <NewItinerary /> </IsPrivate>} />
+          <Route path="/itineraries/edit/:itineraryId" element={<IsPrivate> <ItineraryEdit /> </IsPrivate>}/>
+          <Route path="/signup" element={<IsAnon> <Signup /> </IsAnon>} />
+          <Route path="/login" element={<IsAnon> <Login /> </IsAnon>} />
+          <Route path='/profile' element={<Profile />}></Route>
+          <Route path='/profile/itineraries' element={<UserSpecificItineraries />}></Route>
+          <Route path='/itineraries' element={<Itineraries />}></Route>
+          <Route path='/itineraries/:id' element={<IsPrivate> <ItineraryDetails /> </IsPrivate>}></Route>
+          <Route path='/traveltips' element={ <TravelTips />}></Route>
+          <Route path="/new-travel-tip" element={<IsPrivate> <NewTravelTip /> </IsPrivate>} />
+        </Routes>
       <Footer />
     </div>
   );

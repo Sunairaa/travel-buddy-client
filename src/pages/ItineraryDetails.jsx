@@ -34,7 +34,7 @@ function ItineraryDetails() {
     <div>
 
       {(!itinerary && (
-        <Box sx={{ display: 'flex', width:'100%', justifyContent:'center'}}>
+        <Box sx={{ display: 'flex', width:'100%', justifyContent:'center', top:'calc(50% - 93px)', position:'absolute'}}>
           <CircularProgress />
         </Box>
       )) || (

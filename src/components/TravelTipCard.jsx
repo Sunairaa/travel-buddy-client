@@ -17,6 +17,8 @@ import axios from 'axios';
 import { useContext } from "react";                     
 import { AuthContext } from "../context/auth.context";   
 
+const API_URL = process.env.REACT_APP_API_URL || "https://long-lime-bat-hose.cyclic.app";
+
 export default function TravelTipCard({_id, title, description, category, user, deleteTravelTip, index}) {
     const navigate = useNavigate();
 
@@ -26,7 +28,7 @@ export default function TravelTipCard({_id, title, description, category, user, 
     const handleDeleteClick = (event, id) => {
         const storedToken = localStorage.getItem('authToken');
         axios
-          .delete(`http://localhost:5005/api/traveltips/${id}`, { headers: { Authorization: `Bearer ${storedToken}` } })
+          .delete(`${API_URL}/api/traveltips/${id}`, { headers: { Authorization: `Bearer ${storedToken}` } })
           .then((response) => {
             deleteTravelTip(index)
             navigate("/traveltips");

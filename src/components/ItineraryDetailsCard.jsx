@@ -20,6 +20,7 @@ import axios from 'axios';
 import { Chip } from '@mui/material';
 import { Container } from '@mui/material';
 
+const API_URL = process.env.REACT_APP_API_URL || "https://long-lime-bat-hose.cyclic.app";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -62,7 +63,7 @@ function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities,
   const handleDeleteClick = () => {
     const storedToken = localStorage.getItem('authToken');
     axios
-      .delete(`http://localhost:5005/api/itineraries/${id}`, { headers: { Authorization: `Bearer ${storedToken}` } })
+      .delete(`${API_URL}/api/itineraries/${id}`, { headers: { Authorization: `Bearer ${storedToken}` } })
       .then(() => {
         navigate("/itineraries");
       })

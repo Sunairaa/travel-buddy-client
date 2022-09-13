@@ -12,8 +12,8 @@ function IsAnon( { children } ) {
   // If the authentication is still loading 
   if (isLoading){
     return(
-      <div maxWidth="xl" style={{display:'flex', flexDirection:'column', alignItems:'center', marginTop:'20px', marginBottom:'20px', height:'100%', justifyContent:'center' }}>
-          <Box sx={{ display: 'flex', width:'100%', justifyContent:'center'}}>
+      <div>
+          <Box sx={{ display: 'flex', width:'100%', justifyContent:'center', top:'calc(50% - 93px)', position:'absolute'}}>
             <CircularProgress />
           </Box>
       </div>

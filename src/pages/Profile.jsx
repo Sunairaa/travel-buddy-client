@@ -49,9 +49,9 @@ function Profile() {
   };
 
   return (
-      <Container maxWidth="xl" style={{display:'flex', flexDirection:'column', alignItems:'center', marginTop:'20px', marginBottom:'20px', height:'100%', justifyContent: !user && 'center' }}>
+      <Container maxWidth="xl" style={{display:'flex', flexDirection:'column', alignItems:'center', marginTop:'20px', marginBottom:'20px' }}>
         {(!user && (
-          <Box sx={{ display: 'flex', width:'100%', justifyContent:'center'}}>
+          <Box sx={{ display: 'flex', width:'100%', justifyContent:'center', top:'calc(50% - 93px)', position:'absolute'}}>
             <CircularProgress />
           </Box>
         )) || (

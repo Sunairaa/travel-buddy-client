@@ -1,10 +1,12 @@
 // src/api/service.js
-
 import axios from "axios";
+
+const API_URL = process.env.REACT_APP_API_URL || "https://long-lime-bat-hose.cyclic.app";
+
 
 const api = axios.create({
   // make sure you use PORT = 5005 (the port where our server is running)
-  baseURL: "http://localhost:5005/api"
+  baseURL: `${API_URL}/api`
   // withCredentials: true // => you might need this option if using cookies and sessions
 });
 

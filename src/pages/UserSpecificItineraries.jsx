@@ -7,6 +7,7 @@ import Container from '@mui/material/Container';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
+const API_URL = process.env.REACT_APP_API_URL || "https://long-lime-bat-hose.cyclic.app";
 
 function UserSpecificItineraries() {
   const [itineraries, setItineraries] = useState(null)
@@ -15,7 +16,7 @@ function UserSpecificItineraries() {
   useEffect(() => {
     const storedToken = localStorage.getItem('authToken');
     axios
-      .get('http://localhost:5005/api/my-itineraries', { headers: { Authorization: `Bearer ${storedToken}` } })
+      .get(`${API_URL}/api/my-itineraries`, { headers: { Authorization: `Bearer ${storedToken}` } })
       .then(response => {
         setItineraries(response.data)
       })
@@ -24,10 +25,10 @@ function UserSpecificItineraries() {
   }, [])
 
   return (
-    <div style={{display:'flex', flexDirection:'column', alignItems:'center', heigh:'100%', justifyContent: !itineraries && 'center' }}>
+    <div>
 
       {(!itineraries && (
-        <Box sx={{ display: 'flex', width:'100%', justifyContent:'center'}}>
+        <Box sx={{ display: 'flex', width:'100%', justifyContent:'center', top:'calc(50% - 93px)', position:'absolute'}}>
           <CircularProgress />
         </Box>
       )) || (
