@@ -1,5 +1,4 @@
 import React from 'react'
-import { useState, useEffect} from 'react'
 import axios from 'axios'
 import Card from '@mui/material/Card'
 import { useContext } from "react";                     
@@ -13,25 +12,13 @@ import Grid from '@mui/material/Grid';
 import Input from '@mui/material/Input';
 import Button from '@mui/material/Button';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import { Link } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 function Profile() {
   const { user, setUser } = useContext(AuthContext);
 
-  // useEffect(() => {
-  //   const storedToken = localStorage.getItem('authToken');
-  //   axios
-  //     .get('http://localhost:5005/api/profile', { headers: { Authorization: `Bearer ${storedToken}` } })
-  //     .then(response => {
-  //       setUser(response.data)
-  //     })
-  //     .catch(err => console.log(err))
-
-  // }, [])
-
-  if(!user){
-    return 'Loading'
-  }
-  
   // ******** this method handles the file upload ********
   const handleProfileImageUpload = (e) => {
     console.log("Itinerary Image")
@@ -60,42 +47,52 @@ function Profile() {
   };
 
   return (
-      <Container maxWidth="xl" style={{display:'flex', flexDirection:'column', alignItems:'center', marginTop:'20px', marginBottom:'20px'}}>
-        <Card style={{width:'90%'}}>
-          <CardContent style={{display:'flex', flexDirection:'column', alignItems:'center', margin:'10px'}}>
-            <Typography style={{marginTop:'8px'}} gutterBottom variant="h4" component="div">
-              User information
-            </Typography>
+      <Container maxWidth="xl" style={{display:'flex', flexDirection:'column', alignItems:'center', marginTop:'20px', marginBottom:'20px', height:'100%', justifyContent: !user && 'center' }}>
+        {(!user && (
+          <Box sx={{ display: 'flex', width:'100%', justifyContent:'center'}}>
+            <CircularProgress />
+          </Box>
+        )) || (
+          <>
+            <Card style={{width:'90%'}}>
+              <CardContent style={{display:'flex', flexDirection:'column', alignItems:'center', margin:'10px'}}>
+                <Typography style={{marginTop:'8px'}} gutterBottom variant="h4" component="div">
+                  User information
+                </Typography>
 
-            <Avatar style={{margin:'8px'}} alt="Remy Sharp" src={user.imageUrl} />
+                <Avatar style={{margin:'8px'}} alt="Remy Sharp" src={user.imageUrl} />
 
-            <Grid item container xs={12} justifyContent="center" style={{margin:'8px'}} sx={{ pl: 2}}>
-                  <Input
-                      accept="image/*"
-                      style={{ display: 'none' }}
-                      id="raised-button-file"
-                      multiple
-                      type="file"
-                      onChange={(e) => handleProfileImageUpload(e)}
-                      />
-                      <label htmlFor="raised-button-file">
-                          <Button variant="raised" component="span" sx={{ bgcolor: '#ffbd59'}} startIcon={<AddPhotoAlternateIcon />}>
-                              Image
-                          </Button>
-                      </label> 
-              </Grid>
+                <Grid item container xs={12} justifyContent="center" style={{margin:'8px'}} sx={{ pl: 2}}>
+                      <Input
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          id="raised-button-file"
+                          multiple
+                          type="file"
+                          onChange={(e) => handleProfileImageUpload(e)}
+                          />
+                          <label htmlFor="raised-button-file">
+                              <Button variant="raised" component="span" sx={{ bgcolor: '#ffbd59'}} startIcon={<AddPhotoAlternateIcon />}>
+                                  Image
+                              </Button>
+                          </label> 
+                  </Grid>
 
-            <Typography style={{margin:'8px'}} variant="body2" color="text.secondary">
-              Name: {user.name}
-            </Typography>
-            <Typography style={{margin:'8px'}} variant="body2" color="text.secondary">
-              Email: {user.email}
-            </Typography>
-          </CardContent>
-        </Card>
-        <Button style={{marginTop:'12px'}} variant="raised" component="span" sx={{ bgcolor: '#ffbd59'}}>
-          Check my itineraries
-        </Button>
+                <Typography style={{margin:'8px'}} variant="body2" color="text.secondary">
+                  Name: {user.name}
+                </Typography>
+                <Typography style={{margin:'8px'}} variant="body2" color="text.secondary">
+                  Email: {user.email}
+                </Typography>
+              </CardContent>
+            </Card>
+            <Link to={'/profile/itineraries'}>
+              <Button style={{marginTop:'12px'}} variant="raised" component="span" sx={{ bgcolor: '#ffbd59'}}>
+                Check my itineraries
+              </Button>
+            </Link>
+          </>
+        )}
     </Container>
   )
 }

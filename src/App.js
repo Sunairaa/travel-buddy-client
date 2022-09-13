@@ -15,6 +15,7 @@ import ItineraryDetails from "./pages/ItineraryDetails";
 import Profile from "./pages/Profile";
 import TravelTips from "./pages/TravelTips";
 import NewTravelTip from "./pages/NewTravelTip";
+import UserSpecificItineraries from "./pages/UserSpecificItineraries";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/signup" element={<IsAnon> <Signup /> </IsAnon>} />
         <Route path="/login" element={<IsAnon> <Login /> </IsAnon>} />
         <Route path='/profile' element={<Profile />}></Route>
+        <Route path='/profile/itineraries' element={<UserSpecificItineraries />}></Route>
         <Route path='/itineraries' element={<Itineraries />}></Route>
         <Route path='/itineraries/:id' element={<IsPrivate> <ItineraryDetails /> </IsPrivate>}></Route>
         <Route path='/traveltips' element={ <TravelTips />}></Route>

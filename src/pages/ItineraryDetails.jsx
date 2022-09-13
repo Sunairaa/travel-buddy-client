@@ -3,6 +3,8 @@ import { useState, useEffect} from 'react'
 import axios from 'axios'
 import {useParams} from 'react-router-dom'
 import ItineraryDetailsCard from '../components/ItineraryDetailsCard';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 function ItineraryDetails() {
   const [itinerary, setItinerary] = useState(null)
@@ -26,12 +28,14 @@ function ItineraryDetails() {
 
   }, [id])
 
-  if(!itinerary){
-    return 'Loading'
-  }
-
   return (
     <div>
+
+      {(!itinerary && (
+        <Box sx={{ display: 'flex', width:'100%', justifyContent:'center'}}>
+          <CircularProgress />
+        </Box>
+      )) || (
 
       <ItineraryDetailsCard 
         title={itinerary.title}
@@ -47,6 +51,7 @@ function ItineraryDetails() {
         activities={itinerary.activities}
         isOwner={isOwner}
       />
+      )}
     </div>
   )
 }

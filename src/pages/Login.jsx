@@ -4,7 +4,7 @@ import { AuthContext } from '../context/auth.context';
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
+import LoadingButton from '@mui/lab/LoadingButton';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 // import FormControlLabel from '@mui/material/FormControlLabel';
@@ -25,6 +25,8 @@ export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(undefined);
+  const [loading, setLoading] = useState(false);
+
   
   const navigate = useNavigate();
  
@@ -35,6 +37,7 @@ export default function SignIn() {
 
   const handleLoginSubmit = (event) => {
     event.preventDefault();
+    setLoading(true)
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get('email'),
@@ -57,6 +60,9 @@ export default function SignIn() {
       .catch((error) => {
         const errorDescription = error.response.data.message;
         setErrorMessage(errorDescription);
+      })
+      .finally(() => {
+        setLoading(false)
       })
   };
 
@@ -104,15 +110,15 @@ export default function SignIn() {
               onChange={handlePassword}
               autoComplete="current-password"
             />
-            <Button
+            <LoadingButton
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2, bgcolor: "#26475E"}}
-                
+              loading={loading}          
             >
               Login
-            </Button>
+            </LoadingButton>
             <Grid container>
             { errorMessage && <p className="error-message">{errorMessage}</p> }
             

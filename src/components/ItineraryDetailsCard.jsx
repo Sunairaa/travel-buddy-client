@@ -70,8 +70,8 @@ function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities,
   };  
 
   return (
-    <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
-    <Container maxWidth="xl">
+    <div>
+    <Container maxWidth="xl" style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
       <Card sx={{ width: '90%', margin:8}}>
         <CardHeader
           action={

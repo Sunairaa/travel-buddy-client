@@ -41,6 +41,7 @@ import { v4 as uuidv4 } from 'uuid';
 // json data of countries and cities
 import Countries from '../Data/countries.json';
 import service from "../api/service";
+import LoadingButton from '@mui/lab/LoadingButton';
 const API_URL = "http://localhost:5005";
 const ariaLabel = { 'aria-label': 'description' };
 
@@ -73,7 +74,7 @@ function ItineraryEdit() {
     }]);
     const [notes, setNotes] = useState([]);
     const [isPublic, setPublic] = React.useState(false);
-    const [isLoading, setLoading] = React.useState(true);
+    const [loading, setLoading] = React.useState(false);
  
     const ref = useRef(null);
     
@@ -255,6 +256,7 @@ function ItineraryEdit() {
     const { itineraryId } = useParams();
     const handleNewItinerarySubmit = async (event) => {
         event.preventDefault();
+        setLoading(true)
         const body = {
             title, imageUrl, duration, countries, cities, flightDetails, hotelDetails, activities, notes, isPublic
         }
@@ -270,34 +272,45 @@ function ItineraryEdit() {
         catch(err) {
             setErrorMessage(err)
         }
+        finally {
+            setLoading(false)
+
+        }
     };
 
     // ******** this method handles the file upload ********
     const handleItineraryImageUpload = (e) => {
         console.log("Itinerary Image")
+        setLoading(true)
 
-    // console.log("The file to be uploaded is: ", e.target.files[0]);
- 
-    const uploadData = new FormData();
- 
-    // image => this name has to be the same as in the model since we pass
-    // req.body to .create() method when creating a new movie in '/api/itineraries' POST route
-    uploadData.append("image", e.target.files[0]);
- 
-    service
-      .uploadImage(uploadData)
-      .then(response => {
-        // console.log("response is: ", response);
-        // response carries "fileUrl" which we can use to update the state
-        setImageUrl(response.fileUrl);
-      })
-      .catch(err => console.log("Error while uploading the file: ", err));
+        // console.log("The file to be uploaded is: ", e.target.files[0]);
+    
+        const uploadData = new FormData();
+    
+        // image => this name has to be the same as in the model since we pass
+        // req.body to .create() method when creating a new movie in '/api/itineraries' POST route
+        uploadData.append("image", e.target.files[0]);
+    
+        service
+        .uploadImage(uploadData)
+        .then(response => {
+            // console.log("response is: ", response);
+            // response carries "fileUrl" which we can use to update the state
+            setImageUrl(response.fileUrl);
+        })
+        .catch(err => console.log("Error while uploading the file: ", err))
+        .finally(() => {
+            setLoading(false)
+
+        })
       
     };
 
      // ******** this method handles the file upload ********
      const handleActivityImageUpload = (index, e) => {
         console.log("Activity Image")
+        setLoading(true)
+
         // console.log("The file to be uploaded is: ", e.target.files[0]);
      
         const uploadData = new FormData();
@@ -317,8 +330,12 @@ function ItineraryEdit() {
             setActivities(data);
             // console.log(event)
           })
-          .catch(err => console.log("Error while uploading the file: ", err));
-        };
+          .catch(err => console.log("Error while uploading the file: ", err))
+          .finally(() => {
+            setLoading(false)
+
+        })
+    };
 
 
     
@@ -346,7 +363,6 @@ function ItineraryEdit() {
                 setActivities(itineraryToEdit.activities)
                 setNotes(itineraryToEdit.notes)
                 setPublic(itineraryToEdit.isPublic)
-                setLoading(false)
             })
             .catch((err) => {
                 setErrorMessage(err)
@@ -483,9 +499,9 @@ function ItineraryEdit() {
                         onChange={(e) => handleItineraryImageUpload(e)}
                         />
                         <label htmlFor="raised-button-file">
-                            <Button variant="raised" component="span" sx={{ bgcolor: '#ffbd59'}} startIcon={<AddPhotoAlternateIcon />}>
+                            <LoadingButton loading={loading} variant="raised" component="span" sx={{ bgcolor: '#ffbd59'}} startIcon={<AddPhotoAlternateIcon />}>
                                             Image
-                                </Button>
+                                </LoadingButton>
                         </label> 
                 </Grid>
 
@@ -765,10 +781,10 @@ function ItineraryEdit() {
                                             Image
                                         </Button>
                                     </label>  */}
-                                    <Button variant="raised" component="label" sx={{ bgcolor: '#ffbd59'}} startIcon={<AddPhotoAlternateIcon />}>
+                                    <LoadingButton loading={loading} variant="raised" component="label" sx={{ bgcolor: '#ffbd59'}} startIcon={<AddPhotoAlternateIcon />}>
                                         Image
                                         <input hidden accept="image/*" multiple type="file" name="image" onChange={(e) => handleActivityImageUpload(index, e)}/>
-                                    </Button>
+                                    </LoadingButton>
                             </Grid>
                             {activity.image && 
                             <Grid item container xs={12} justifyContent="flex-start" sx={{ pl: 2}}>
@@ -847,14 +863,15 @@ function ItineraryEdit() {
                 
             </Grid>
            
-            <Button
+            <LoadingButton 
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2, bgcolor: "#26475E" }}
+              loading={loading}
             >
               Update
-            </Button>
+            </LoadingButton>
 
             { errorMessage && <p className="error-message">{errorMessage}</p> }
           </Box>
