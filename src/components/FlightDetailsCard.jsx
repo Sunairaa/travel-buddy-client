@@ -2,6 +2,7 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import moment from 'moment'
 
 function FlightDetailsCard({airline, date, time, departure, arrival, index}) {
   return (
@@ -14,10 +15,10 @@ function FlightDetailsCard({airline, date, time, departure, arrival, index}) {
           Airline: {airline}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Date: {date}
+          Date: {moment(date).format('DD/MM/YYYY')}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Time: {time}
+          Time: {moment(time).format('h:mm A')}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           Departure: {departure}

@@ -3,6 +3,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { CardMedia } from '@mui/material';
+import moment from 'moment'
 
 function ActivitiesDetailsCard({title, date, time, location, note, imageUrl, index}) {
   return (
@@ -22,10 +23,10 @@ function ActivitiesDetailsCard({title, date, time, location, note, imageUrl, ind
             style={{objectFit:'cover'}}
         />
         <Typography variant="body2" color="text.secondary">
-          Date: {date}
+          Date: {moment(date).format('DD/MM/YYYY')}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Time: {time}
+          Time: {moment(time).format('h:mm A')}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           Location: {location}

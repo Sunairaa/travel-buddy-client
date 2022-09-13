@@ -61,7 +61,7 @@ const Navbar = () => {
     <AppBar position="static" style={{backgroundColor: "#26475E"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <FlightIcon sx={{ display: { xs: 'none', md: 'flex' }, color: '#FFBD59', mr: 1 }} />
+          <FlightIcon fontSize="large" sx={{ display: { xs: 'none', md: 'flex' }, color: '#FFBD59', mr: 1 }} />
           <Typography
             variant="h6"
             noWrap

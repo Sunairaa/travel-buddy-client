@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 // import FormControlLabel from '@mui/material/FormControlLabel';
@@ -15,6 +14,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import LoadingButton from '@mui/lab/LoadingButton';
 const API_URL = process.env.REACT_APP_API_URL || "https://long-lime-bat-hose.cyclic.app";
 
 
@@ -25,6 +25,7 @@ export default function SignUp() {
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
     const [errorMessage, setErrorMessage] = useState(undefined);
+    const [loading, setLoading] = useState(false);
     
     const navigate = useNavigate();
     
@@ -34,6 +35,7 @@ export default function SignUp() {
  
     const handleSignupSubmit = (event) => {
     event.preventDefault();
+    setLoading(true)
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get('email'),
@@ -53,6 +55,9 @@ export default function SignUp() {
          const errorDescription = error.response.data.message;
          setErrorMessage(errorDescription);
        })
+       .finally(() => {
+        setLoading(false)
+      })
   };
 
   return (
@@ -110,14 +115,15 @@ export default function SignUp() {
                 />
               </Grid>
             </Grid>
-            <Button
+            <LoadingButton
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2, bgcolor: "#26475E" }}
+              loading={loading}          
             >
               Sign Up
-            </Button>
+            </LoadingButton>
             { errorMessage && <p className="error-message">{errorMessage}</p> }
             <Grid container justifyContent="center">
               <Grid item>
