@@ -13,6 +13,8 @@ import Footer from "./components/Footer";
 import Itineraries from "./pages/Itineraries";
 import ItineraryDetails from "./pages/ItineraryDetails";
 import Profile from "./pages/Profile";
+import TravelTips from "./pages/TravelTips";
+import NewTravelTip from "./pages/NewTravelTip";
 
 function App() {
   return (
@@ -27,6 +29,9 @@ function App() {
         <Route path='/profile' element={<Profile />}></Route>
         <Route path='/itineraries' element={<Itineraries />}></Route>
         <Route path='/itineraries/:id' element={<IsPrivate> <ItineraryDetails /> </IsPrivate>}></Route>
+        <Route path='/traveltips' element={ <TravelTips />}></Route>
+        <Route path="/new-travel-tip" element={<IsPrivate> <NewTravelTip /> </IsPrivate>} />
+
       </Routes>
       <Footer />
     </div>
