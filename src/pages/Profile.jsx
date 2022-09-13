@@ -16,6 +16,8 @@ import { Link } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
+const API_URL = process.env.REACT_APP_API_URL || "https://long-lime-bat-hose.cyclic.app";
+
 function Profile() {
   const { user, setUser } = useContext(AuthContext);
 
@@ -38,7 +40,7 @@ function Profile() {
         // response carries "fileUrl" which we can use to update the state
         const storedToken = localStorage.getItem('authToken');
         return axios 
-          .put('http://localhost:5005/api/profile', {imageUrl: response.fileUrl}, { headers: { Authorization: `Bearer ${storedToken}` } })
+          .put(`${API_URL}/api/profile`, {imageUrl: response.fileUrl}, { headers: { Authorization: `Bearer ${storedToken}` } })
           .then( response => {
             setUser(response.data)
           })

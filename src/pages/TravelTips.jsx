@@ -19,7 +19,7 @@ import Stack from '@mui/material/Stack';
 import { useContext } from "react";                     
 import { AuthContext } from "../context/auth.context";   
 
-const API_URL = "http://localhost:5005";
+const API_URL = process.env.REACT_APP_API_URL || "https://long-lime-bat-hose.cyclic.app";
 
 
 function TravelTips() {
