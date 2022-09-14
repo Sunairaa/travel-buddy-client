@@ -24,7 +24,8 @@ export default function TravelTipCard({_id, title, description, category, user, 
 
     const isLoggedIn = useContext(AuthContext).isLoggedIn;
     const loggedInUser = useContext(AuthContext).user;
-    
+    console.log("logged in user",loggedInUser)
+    console.log("owner travel tip", user)
     const handleDeleteClick = (event, id) => {
         const storedToken = localStorage.getItem('authToken');
         axios
@@ -56,7 +57,7 @@ export default function TravelTipCard({_id, title, description, category, user, 
                 <br></br>
                 
                 <Typography variant="span" component="span">
-                By: <Chip label={user.name}/>
+                By: <Chip label={user && user.name}/>
                 </Typography>
                
                 
@@ -70,7 +71,7 @@ export default function TravelTipCard({_id, title, description, category, user, 
             <React.Fragment>
                 {
                     isLoggedIn && 
-                    loggedInUser._id === user._id &&
+                    // loggedInUser._id === user._id &&
                     (  
                         <IconButton aria-label="delete" color="primary" onClick={(event) => handleDeleteClick(event, _id)}>
                             <DeleteIcon />
