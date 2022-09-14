@@ -19,6 +19,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Chip } from '@mui/material';
 import { Container } from '@mui/material';
+import Recommendations from './Recommendations';
 
 const API_URL = process.env.REACT_APP_API_URL || "https://long-lime-bat-hose.cyclic.app";
 
@@ -264,22 +265,13 @@ function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities,
           </Divider>
           
           <Collapse in={showRecommendations} timeout="auto" unmountOnExit>
-            <Grid container spacing={6}
-              justifyContent="center"
-              alignItems="center"
-            >   
-                <Grid  
-                  item xs={12} sm={12} md={6} lg={4} xl={3}
-                  display='flex'
-                  justifyContent='flex-start'
-                  alignItems='center'
-                >
-                  <Typography variant="body2" color="text.secondary">
-                    Recommendations: {notes}
-                    <br/>
-                  </Typography>
-                </Grid>
-            </Grid>
+            <div style={{display:'flex', justifyContent:'center', }}>
+              <div style={{textAlign:'left'}}>
+                {notes.map((note, index) => (
+                    <Recommendations index={index} notes={note}/>
+                ))}
+              </div>
+            </div>
           </Collapse>
         </CardContent>
       </Card>
