@@ -286,6 +286,7 @@ function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities,
           </Divider>
           
           <Collapse in={showRecommendations} timeout="auto" unmountOnExit>
+
             <Grid container spacing={6}
               justifyContent="flex-start"
               alignItems="center"
@@ -316,7 +317,7 @@ function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities,
                     })}
                     
                 </List>
-                    {/* {notes} */}
+                  
                     <br/>
                   </Typography>
                 </Grid>
