@@ -3,6 +3,7 @@ import { useState, useEffect} from 'react'
 import axios from 'axios'
 import ItineraryCard from '../components/ItineraryCard'
 import { Grid } from '@mui/material'
+import {Typography} from '@mui/material'
 import Container from '@mui/material/Container';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
@@ -34,7 +35,12 @@ function UserSpecificItineraries() {
       )) || (
 
       <Container maxWidth="xl">
-        <h1 style={{fontSize:'2.75em', fontWeight:'lighter'}}>List of my itineraries</h1>
+        <Grid xs={12} sx={{ fontWeight: "700", fontSize: "1rem", margin: "2em 0", textTransform: "uppercase", padding: "2em"}}>
+                <Typography variant="h5" component="span" sx={{ fontWeight: "700", color: "#26475e", fontSize: "2rem", textTransform: "uppercase" }}>
+                  My Itineraries
+                </Typography>
+        </Grid>
+        {/* <h1 style={{fontSize:'2.75em', fontWeight:'lighter'}}>List of my itineraries</h1> */}
         <Grid container spacing={6}
           justifyContent="center"
           alignItems="center"
@@ -42,7 +48,7 @@ function UserSpecificItineraries() {
 
         {itineraries.map((itinerary) => {
           return(
-            <Grid item xs={12} sm={12} md={6} xl={4}
+            <Grid item xs={12} sm={12} md={6} lg={4} xl={4}
               display='flex'
               justifyContent='center'
               alignItems='center'
@@ -50,6 +56,7 @@ function UserSpecificItineraries() {
             >
               <ItineraryCard 
                 title={itinerary.title}
+                countries={itinerary.countries}
                 cities={itinerary.cities}
                 user={itinerary.user}
                 imageUrl={itinerary.imageUrl || defaultImageUrl}
