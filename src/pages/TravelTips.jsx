@@ -18,13 +18,14 @@ import Stack from '@mui/material/Stack';
 // import MaterialUISwitch from "../components/MaterialUISwitch";
 import { useContext } from "react";                     
 import { AuthContext } from "../context/auth.context";   
+import CircularProgress from '@mui/material/CircularProgress';
 
 const API_URL = process.env.REACT_APP_API_URL || "https://long-lime-bat-hose.cyclic.app";
 
 
 function TravelTips() {
 
-    const [travelTips, setTravelTips] = useState([]);
+    const [travelTips, setTravelTips] = useState(null);
     const [viewAllTips, setViewAllTips] = useState(true);
 
     const [loading, setLoading] = useState(true);
@@ -62,6 +63,13 @@ function TravelTips() {
     
     return (
     <Box>
+
+        {(!travelTips && (
+            <Box sx={{ display: 'flex', width:'100%', justifyContent:'center', top:'calc(50% - 93px)', position:'absolute'}}>
+                <CircularProgress />
+            </Box>
+        )) || (
+
         <Grid container spacing={2} sx={{ justifyContent: "center" , alignContent: "center", marginTop: "2em"}} >
       
             {isLoggedIn &&
@@ -127,6 +135,7 @@ function TravelTips() {
             })} */}
         </Grid>
     </Grid>
+    )}
     </Box>
     
  
