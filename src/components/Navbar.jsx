@@ -9,19 +9,30 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import FlightIcon from '@mui/icons-material/Flight';
+import LoginIcon from '@mui/icons-material/Login';
+import LogoutIcon from '@mui/icons-material/Logout';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import logo from '../../src/logo.png';
 import useravatar from '../../src/user.png';
 
 
 
-// const pages = ['Login', 'Sign Up'];
-// const settings = ['Profile', 'Logout'];
+const { palette } = createTheme();
+const { augmentColor } = palette;
+const createColor = (mainColor) => augmentColor({ color: { main: mainColor } });
+const theme = createTheme({
+  palette: {
+    anger: createColor('#F40B27')
+  },
+});
 
 const Navbar = () => {
    
@@ -110,12 +121,6 @@ const Navbar = () => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {/* {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                   
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))} */}
               {isLoggedIn && (
                 <div>
                     <MenuItem onClick={handleCloseNavMenu}>
@@ -129,10 +134,14 @@ const Navbar = () => {
               {!isLoggedIn && (
                 <div>
                 <MenuItem onClick={handleCloseNavMenu}>
-                    <Link to="/signup"> <Button variant="text" sx={{ my: 2, color: 'black', display: 'block' }}>Sign Up</Button> </Link>
+                    <Link to="/signup"> 
+                      <Button variant="outlined" sx={{ my: 1, color: '#26475E', display: 'flex', border: '1px solid #ffbd59'}}><HowToRegIcon sx={{ mr: 2 }}/> Sign Up</Button>
+                    </Link>
                 </MenuItem>
                 <MenuItem onClick={handleCloseNavMenu}>
-                    <Link to="/login"> <Button variant="text" sx={{ my: 2, color: 'black', display: 'block' }}>Login</Button> </Link>
+                  <Link to="/login"> 
+                    <Button variant="outlined" sx={{ my: 1, color: '#26475E', display: 'flex', border: '1px solid #ffbd59'}}><LoginIcon sx={{ mr: 2 }}/>  Login</Button> 
+                  </Link>
                 </MenuItem>
               </div>
               )}
@@ -144,7 +153,7 @@ const Navbar = () => {
             variant="h5"
             noWrap
             component="a"
-            href=""
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -158,23 +167,26 @@ const Navbar = () => {
           >
             TRAVEL BUDDY
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ flexGrow: 1, justifyContent: 'flex-end', display: { xs: 'none', md: 'flex' } }}>
      
-      {isLoggedIn && (
+              {isLoggedIn && (
                 <>
            
-              <NavLink to="/" className={({ isActive }) => isActive ? "selected" : ""}> <Button variant="text" sx={{ my: 2, color: 'white', display: 'block' }}>Home</Button> </NavLink>
+              <NavLink to="/" className={({ isActive }) => isActive ? "selected" : ""}> <Button variant="text" sx={{ my: 2, mx: 1, color: 'white', display: 'block' }}>Home</Button> </NavLink>
              
-              <NavLink to="/" className={({ isActive }) => isActive ? "selected" : ""}> <Button variant="text" sx={{ my: 2, color: 'white', display: 'block' }}>Itineraries</Button> </NavLink>
+              <NavLink to="/itineraries" className={({ isActive }) => isActive ? "selected" : ""}> <Button variant="text" sx={{ my: 2, mx: 1, color: 'white', display: 'block' }}>Itineraries</Button> </NavLink>
             
+              <NavLink to="/traveltips" className={({ isActive }) => isActive ? "selected" : ""}> <Button variant="text" sx={{ my: 2, mx: 1, color: 'white', display: 'block' }}>Travel Tips</Button> </NavLink>
+                
               </>
               )}
               {!isLoggedIn && (
-                <>
-           
-              <Link to="/signup"> <Button variant="text" sx={{ my: 2, color: 'white', display: 'block' }}>Sign Up</Button> </Link>
+              <>
+              <Link to="/signup"> 
+                <Button variant="outlined" sx={{ my: 2, mx: 1, color: 'white', display: 'flex', border: '1px solid #ffbd59'}}><HowToRegIcon sx={{ mr: 2 }}/> Sign Up</Button>
+              </Link>
               
-              <Link to="/login"> <Button variant="text" sx={{ my: 2, color: 'white', display: 'block' }}>Login</Button> </Link>
+              <Link to="/login"> <Button variant="outlined" sx={{ my: 2, color: 'white', display: 'flex', border: '1px solid #ffbd59'}}><LoginIcon sx={{ mr: 2 }}/>  Login</Button> </Link>
             
               </>
               )}
@@ -182,7 +194,7 @@ const Navbar = () => {
           </Box>
 
           {isLoggedIn && (
-            <Box sx={{ flexGrow: 0 }}>
+            <Box sx={{ flexGrow: 0, ml: 4}}>
             <Tooltip title={user && user.name}>
               <IconButton 
               onClick={handleOpenUserMenu}
@@ -206,17 +218,11 @@ const Navbar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {/* {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))} */}
-
                 <MenuItem onClick={handleProfileClick}>
-                    <Button variant="text">Profile</Button>
+                    <Button variant="text" sx={{color: '#26475E'}}><AssignmentIndIcon sx={{ mr: 2 }}/>Profile</Button>
                 </MenuItem>
                 <MenuItem onClick={handleLogoutClick}>
-                    <Button variant="text" onClick={logOutUser}>Logout</Button>
+                    <Button variant="text" sx={{color: '#26475E'}} onClick={logOutUser}><LogoutIcon sx={{ mr: 2 }}/> Logout</Button>
                 </MenuItem>
             </Menu>
           </Box>
