@@ -86,7 +86,7 @@ function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities,
     <Container maxWidth="xl" style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
       <Card sx={{ width: '90%', margin:8, background: "#c0c1c014"}}>
         <CardHeader
-          sx={{ pt:2, px:2 , background: "#ffbd59"}}
+          sx={{ pt:2, px:2}}
           action={
             <>
             {isOwner && 
@@ -110,8 +110,8 @@ function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities,
             </>
           }
           />
-          <CardContent sx={{background: "#ffbd59"}}>
-            <Typography gutterBottom variant="h3" component="div" style={{color:'#26475e', textTransform:'uppercase'}}>
+          <CardContent>
+            <Typography gutterBottom variant="h3" component="div" sx={{ fontWeight: "700", color: "#26475e", fontSize: "2rem", textTransform: "uppercase" }}>
               {title}
             </Typography>     
             <Typography variant="h6" color="text.secondary">
@@ -287,7 +287,7 @@ function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities,
           
           <Collapse in={showRecommendations} timeout="auto" unmountOnExit>
 
-            <Grid container spacing={6}
+            {/* <Grid container spacing={6}
               justifyContent="flex-start"
               alignItems="center"
               sx={{py: 4}}
@@ -297,31 +297,36 @@ function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities,
                   display='flex'
                   justifyContent='flex-start'
                   alignItems='center'
-                >
+                > */}
+
                   <Typography variant="body2" color="text.secondary">
-                  <List
-                    sx={{ width: '100%', pl: 5}}
-                  >
+                  <div style={{display:'flex', justifyContent:'center'}}>
+                      <div style={{textAlign:'left'}}>
+                  <List sx={{ width: '100%'}}>
+                    
                     {notes.map((note) => {
                       return(
+                        <>
                         <ListItem disablePadding key = {note}>
                         <ListItemButton>
                           <ListItemIcon>
-                            <RadioButtonUncheckedIcon sx={{color: "#ffbd59"}}/>
+                            <RadioButtonUncheckedIcon fontSize='xs' sx={{color: "#ffbd59"}}/>
                           </ListItemIcon>
                           <ListItemText primary={note} />
                         </ListItemButton>
                       </ListItem>
+                      </>
                       )
-                     
                     })}
-                    
                 </List>
-                  
+                  </div>
+                  </div>
                     <br/>
                   </Typography>
-                </Grid>
-            </Grid>
+
+                {/* </Grid>
+            </Grid> */}
+            
           </Collapse>
         </CardContent>
       </Card>

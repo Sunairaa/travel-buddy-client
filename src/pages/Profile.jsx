@@ -58,7 +58,7 @@ function Profile() {
           <>
             <Card style={{width:'90%'}}>
               <CardContent style={{display:'flex', flexDirection:'column', alignItems:'center', margin:'10px'}}>
-                <Typography style={{marginTop:'8px'}} gutterBottom variant="h4" component="div">
+                <Typography sx={{ fontWeight: "700", color: "#26475e", fontSize: "2rem", textTransform: "uppercase", marginTop:'8px' }} gutterBottom variant="h4" component="div">
                   User information
                 </Typography>
 
