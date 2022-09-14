@@ -1,43 +1,22 @@
 import * as React from 'react';
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Input from '@mui/material/Input';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import Checkbox from '@mui/material/Checkbox';
-// import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LuggageIcon from '@mui/icons-material/Luggage';
-import CloseIcon from '@mui/icons-material/Close';
-import AddIcon from '@mui/icons-material/Add';
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import Typography from '@mui/material/Typography';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
-import dayjs from 'dayjs';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider, useTheme } from '@mui/material/styles';
-import Card from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
-import Switch from '@mui/material/Switch';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Divider from '@mui/material/Divider';
 import Select from '@mui/material/Select';
-import Chip from '@mui/material/Chip';
-import {useRef} from 'react';
-import { v4 as uuidv4 } from 'uuid';
 
 const API_URL = process.env.REACT_APP_API_URL || "https://long-lime-bat-hose.cyclic.app";
 const ariaLabel = { 'aria-label': 'description' };
@@ -56,7 +35,6 @@ const MenuProps = {
 
 const theme = createTheme();
 function NewTravelTip() {
-    // title, imageUrl, duration, countries, cities, fliightDetails, hotelDetails, activities, notes, isPublic
     const [title, setTitle] = React.useState("");
     const [category, setCategory] = React.useState("");
     const [description, setDescription] = useState(""); 
@@ -148,13 +126,14 @@ function NewTravelTip() {
                 <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">Category</InputLabel>
                     <Select
+                    required
                     labelId="demo-simple-select-label"
                     name="category"
                     value={category}
                     label="Category"
                     onChange={handleCategory}
                     >
-                        <MenuItem value="Travel">Travel</MenuItem>
+                        <MenuItem value="Transport">Transport</MenuItem>
                         <MenuItem value="Hotel">Hotel</MenuItem>
                         <MenuItem value="Flight">Flight</MenuItem>
                         <MenuItem value="Other">Other</MenuItem>
