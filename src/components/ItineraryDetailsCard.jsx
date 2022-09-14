@@ -11,7 +11,13 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Divider from '@mui/material/Divider';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
 import Grid from '@mui/material/Grid';
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import FlightDetailsCard from './FlightDetailsCard';
 import HotelDetailsCard from './HotelDetailsCard';
 import ActivitiesDetailsCard from './ActivitiesDetailsCard';
@@ -38,6 +44,7 @@ function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities,
   const [showHotels, setShowHotels] = React.useState(true);
   const [showActivities, setShowActivities] = React.useState(true);
   const [showRecommendations, setShowRecommendations] = React.useState(true);
+  const [errorMessage, setErrorMessage] = React.useState(undefined);
 
   const navigate = useNavigate();
   const defaultImageUrl = 'https://images.unsplash.com/photo-1499591934245-40b55745b905?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2372&q=80'
@@ -67,14 +74,19 @@ function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities,
       .then(() => {
         navigate("/itineraries");
       })
-      .catch((err) => console.log(err));
+      .catch((error) => {
+        const errorDescription = error.response.data.message;
+        setErrorMessage(errorDescription);
+      })
+      // .catch((err) => console.log(err));
   };  
 
   return (
     <div>
     <Container maxWidth="xl" style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
-      <Card sx={{ width: '90%', margin:8}}>
+      <Card sx={{ width: '90%', margin:8, background: "#c0c1c014"}}>
         <CardHeader
+          sx={{ padding: 0 }}
           action={
             <>
             {isOwner && 
@@ -92,12 +104,12 @@ function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities,
             </>
           }
           />
-          <CardContent>
-            <Typography gutterBottom variant="h4" component="div" style={{color:'#26475e'}}>
+          <CardContent sx={{background: "#ffbd59"}}>
+            <Typography gutterBottom variant="h3" component="div" style={{color:'#26475e', textTransform:'uppercase'}}>
               {title}
             </Typography>     
-            <Typography variant="body2" color="text.secondary">
-              {`Duration of itinerary: ${duration} days`}
+            <Typography variant="h6" color="text.secondary">
+              {`Duration -  ${duration} days`}
             </Typography>      
           </CardContent>
           
@@ -110,11 +122,11 @@ function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities,
         />
         <CardContent>
           <Typography variant="body2" color="text.secondary" style={{textAlign:'end'}}>
-            By: {user.name}
+           <Chip label={`By: ${user.name}`} />
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="body2" color="text.secondary" style={{padding:0, margin:"1em", display:'flex', justifyContent:'center'}}>
           <Typography gutterBottom variant="h5" component="div">
-              Countries you'll visit
+              Countries
           </Typography >
               <ul style={{listStyleType:'none', padding:0, margin:0, display:'flex', justifyContent:'center'}}>
                 {countries.map((country) => {
@@ -126,9 +138,9 @@ function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities,
                 })}
               </ul>
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-          <Typography gutterBottom variant="h5" component="div">
-              Cities you'll visit
+          <Typography variant="body2" color="text.secondary" style={{pl:6, margin:0, display:'flex', justifyContent:'center'}}>
+          <Typography gutterBottom variant="h5" component="span">
+              Cities
           </Typography >
               <ul style={{listStyleType:'none', padding:0, margin:0, display:'flex', justifyContent:'center', marginBottom:'8.4px'}}>
                 {cities.map((city) => {
@@ -156,6 +168,7 @@ function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities,
           
           <Collapse in={showFlights} timeout="auto" unmountOnExit>
             <Grid container spacing={6}
+              sx={{py: 4}}
               justifyContent="center"
               alignItems="center"
             >   
@@ -165,6 +178,7 @@ function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities,
                   display='flex'
                   justifyContent='flex-start'
                   alignItems='center'
+                  
                 >
                   <FlightDetailsCard 
                     airline={flight.airline}
@@ -195,6 +209,7 @@ function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities,
             <Grid container spacing={6}
               justifyContent="center"
               alignItems="center"
+              sx={{py: 4}}
             >   
               {hotelDetails.map((hotel, index) => (
                 <Grid  
@@ -237,6 +252,7 @@ function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities,
                   display='flex'
                   justifyContent='flex-start'
                   alignItems='center'
+                  sx={{py: 4}}
                 >
                   <ActivitiesDetailsCard 
                     title={activity.title}
@@ -252,7 +268,7 @@ function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities,
             </Grid>
           </Collapse>
           <Divider Divider textAlign="left" style={{width:'100%'}}>
-              RECOMMENDATIONS
+              NOTES
               <ExpandMore
                 expand={showRecommendations}
                 onClick={handleShowRecommendationsClick}
@@ -265,17 +281,36 @@ function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities,
           
           <Collapse in={showRecommendations} timeout="auto" unmountOnExit>
             <Grid container spacing={6}
-              justifyContent="center"
+              justifyContent="flex-start"
               alignItems="center"
+              sx={{py: 4}}
             >   
                 <Grid  
-                  item xs={12} sm={12} md={6} lg={4} xl={3}
+                  item xs={12} sm={12} md={6} lg={12} xl={3}
                   display='flex'
                   justifyContent='flex-start'
                   alignItems='center'
                 >
                   <Typography variant="body2" color="text.secondary">
-                    Recommendations: {notes}
+                  <List
+                    sx={{ width: '100%', pl: 5}}
+                  >
+                    {notes.map((note) => {
+                      return(
+                        <ListItem disablePadding key = {note}>
+                        <ListItemButton>
+                          <ListItemIcon>
+                            <RadioButtonUncheckedIcon sx={{color: "#ffbd59"}}/>
+                          </ListItemIcon>
+                          <ListItemText primary={note} />
+                        </ListItemButton>
+                      </ListItem>
+                      )
+                     
+                    })}
+                    
+                </List>
+                    {/* {notes} */}
                     <br/>
                   </Typography>
                 </Grid>

@@ -62,7 +62,7 @@ export default function TravelTipCard({_id, title, description, category, user, 
                 </Typography>
 
                 <Typography variant="span" component="span">
-                By: <Chip label={user && user.name}/>
+                 <Chip label={user && `By: ${user.name}`}/>
                 </Typography>
               </Stack> 
             </React.Fragment>
