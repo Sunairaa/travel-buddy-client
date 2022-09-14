@@ -16,6 +16,7 @@ import Profile from "./pages/Profile";
 import TravelTips from "./pages/TravelTips";
 import NewTravelTip from "./pages/NewTravelTip";
 import UserSpecificItineraries from "./pages/UserSpecificItineraries";
+import PageNotFound from "./pages/PageNotFound";
 
 function App() {
   return (
@@ -33,6 +34,8 @@ function App() {
           <Route path='/itineraries/:id' element={<IsPrivate> <ItineraryDetails /> </IsPrivate>}></Route>
           <Route path='/traveltips' element={ <TravelTips />}></Route>
           <Route path="/new-travel-tip" element={<IsPrivate> <NewTravelTip /> </IsPrivate>} />
+          <Route path="*" element={<PageNotFound />} />
+
         </Routes>
       <Footer />
     </div>
