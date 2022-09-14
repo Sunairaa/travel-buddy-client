@@ -4,11 +4,13 @@ import axios from 'axios'
 import ItineraryCard from '../components/ItineraryCard'
 import { Grid } from '@mui/material'
 import Container from '@mui/material/Container';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 const API_URL = process.env.REACT_APP_API_URL || "https://long-lime-bat-hose.cyclic.app";
 
 function Itineraries() {
-  const [itineraries, setItineraries] = useState([])
+  const [itineraries, setItineraries] = useState(null)
   const defaultImageUrl = 'https://images.unsplash.com/photo-1499591934245-40b55745b905?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2372&q=80'
 
   useEffect(() => {
@@ -23,6 +25,13 @@ function Itineraries() {
 
   return (
     <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+
+      {(!itineraries && (
+        <Box sx={{ display: 'flex', width:'100%', justifyContent:'center', top:'calc(50% - 93px)', position:'absolute'}}>
+          <CircularProgress />
+        </Box>
+      )) || (
+
       <Container maxWidth="xl">
         <h1 style={{fontSize:'2.75em', fontWeight:'lighter'}}>List of itineraries</h1>
         <Grid container spacing={6}
@@ -51,6 +60,7 @@ function Itineraries() {
         })}
         </Grid>
       </Container>
+      )}
     </div>
   )
 }
