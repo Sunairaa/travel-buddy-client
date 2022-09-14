@@ -71,7 +71,8 @@ export default function TravelTipCard({_id, title, description, category, user, 
             <React.Fragment>
                 {
                     isLoggedIn && 
-                    // loggedInUser._id === user._id &&
+                    user && 
+                    loggedInUser._id === user._id &&
                     (  
                         <IconButton aria-label="delete" color="primary" onClick={(event) => handleDeleteClick(event, _id)}>
                             <DeleteIcon />
