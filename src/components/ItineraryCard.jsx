@@ -4,8 +4,9 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import {Link} from 'react-router-dom';
+import { Chip } from '@mui/material';
 
-function ItineraryCard({title, cities, user, imageUrl, notes, id}) {
+function ItineraryCard({title, cities, countries, user, imageUrl, notes, id}) {
   return (
     <Card sx={{ width: '90%', marginBottom:8, maxWidth:500}}>
       <CardMedia
@@ -16,9 +17,7 @@ function ItineraryCard({title, cities, user, imageUrl, notes, id}) {
         style={{objectFit:'cover'}}
       />
       <CardContent>
-        <Typography variant="body2" color="text.secondary" style={{textAlign:'end'}}>
-          By: {user && user.name}
-        </Typography>
+        
         <Link to={`/itineraries/${id}`}>
             <Typography gutterBottom variant="h4" component="div">
             {title}
@@ -26,19 +25,33 @@ function ItineraryCard({title, cities, user, imageUrl, notes, id}) {
         </Link>
         <Typography variant="body2" color="text.secondary">
         <Typography gutterBottom variant="h5" component="div">
-            Cities you'll visit
+            Countries
         </Typography >
-            <ul style={{listStyleType:'none', padding:0, margin:0, display:'flex', justifyContent:'space-evenly', marginBottom:'8.4px'}}>
-              {cities.map((city) => {
+            <ul style={{listStyleType:'none', padding:0, display:'flex', justifyContent:'center', marginBottom:'8.4px'}}>
+              {countries.map((country) => {
                 return(
-                  <li>{city}</li>
+                  <Chip sx={{mr:1}} label={country} />
                 )
               })}
             </ul>
         </Typography>
+
         <Typography variant="body2" color="text.secondary">
-          Recommendations: {notes}
-          <br/>
+        <Typography gutterBottom variant="h5" component="div">
+            Cities
+        </Typography >
+            <ul style={{listStyleType:'none', padding:0, mr:1, display:'flex', justifyContent:'center', marginBottom:'8.4px'}}>
+              {cities.map((city) => {
+                return(
+                  // <li>{city}</li>
+                  <Chip sx={{mr:1}} label={city} />
+                )
+              })}
+            </ul>
+        </Typography>
+        
+        <Typography variant="body2" color="text.secondary" style={{mt: 4, textAlign:'end'}}>
+          By: {user && user.name}
         </Typography>
       </CardContent>
     </Card>

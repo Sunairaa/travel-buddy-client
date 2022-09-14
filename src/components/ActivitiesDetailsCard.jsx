@@ -7,13 +7,13 @@ import moment from 'moment'
 
 function ActivitiesDetailsCard({title, date, time, location, note, imageUrl, index}) {
   return (
-    <Card style={{width:'100%'}}>
+    <Card style={{width:'100%', border: "#ffbd59 2px dashed", boxShadow: "none"}}>
       <CardContent>
       <Typography variant="body2" color="text.secondary">
           Activity {index + 1}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Title: {title}
+        <Typography variant="body2" sx={{mb: 2}}>
+          {title}
         </Typography>
         <CardMedia
             component="img"
@@ -22,17 +22,14 @@ function ActivitiesDetailsCard({title, date, time, location, note, imageUrl, ind
             image={imageUrl}
             style={{objectFit:'cover'}}
         />
-        <Typography variant="body2" color="text.secondary">
-          Date: {moment(date).format('DD/MM/YYYY')}
+        <Typography variant="body2" color="text.secondary" sx={{mt: 3}}>
+          {moment(date).format('DD/MM/YYYY')} - {moment(time).format('h:mm A')}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Time: {moment(time).format('h:mm A')}
+        <Typography variant="body2" >
+         {location}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Location: {location}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Note: {note}
+        <Typography variant="body2" color="text.secondary" >
+          {note}
         </Typography>
 
       </CardContent>
