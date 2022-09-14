@@ -13,13 +13,14 @@ import AntSwitch from '../components/AntSwitch';
 import Stack from '@mui/material/Stack';
 import { useContext } from "react";                     
 import { AuthContext } from "../context/auth.context";   
+import CircularProgress from '@mui/material/CircularProgress';
 
 const API_URL = process.env.REACT_APP_API_URL || "https://long-lime-bat-hose.cyclic.app";
 
 
 function TravelTips() {
 
-    const [travelTips, setTravelTips] = useState([]);
+    const [travelTips, setTravelTips] = useState(null);
     const [viewAllTips, setViewAllTips] = useState(true);
 
     const isLoggedIn = useContext(AuthContext).isLoggedIn;
@@ -53,6 +54,15 @@ function TravelTips() {
     
     return (
     <Box>
+
+
+        {(!travelTips && (
+            <Box sx={{ display: 'flex', width:'100%', justifyContent:'center', top:'calc(50% - 93px)', position:'absolute'}}>
+                <CircularProgress />
+            </Box>
+        )) || (
+
+
         <Grid container spacing={2} sx={{ justifyContent: "center" , alignContent: "center"}} >
             <Grid xs={12} sx={{ fontWeight: "700", fontSize: "1rem", margin: "2em 0", textTransform: "uppercase", padding: "2em"}}>
                 <Typography variant="h5" component="span" sx={{ fontWeight: "700", color: "#26475e", fontSize: "2rem", textTransform: "uppercase" }}>
@@ -119,11 +129,9 @@ function TravelTips() {
             }
         </Grid>
     </Grid>
+    )}
     </Box>
     
- 
-    
-   
   );
 }
 
