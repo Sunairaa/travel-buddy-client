@@ -1,17 +1,17 @@
 import * as React from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom'
-import List from '@mui/material/List';
+import { useNavigate } from 'react-router-dom'
 import ListItem from '@mui/material/ListItem';
-import Divider from '@mui/material/Divider';
-import FlightIcon from '@mui/icons-material/Flight';
+import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
 import BedroomParentIcon from '@mui/icons-material/BedroomParent';
-import LuggageIcon from '@mui/icons-material/Luggage';
+import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import Chip from '@mui/material/Chip';
 import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
+import HikingIcon from '@mui/icons-material/Hiking';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import { useContext } from "react";                     
@@ -39,34 +39,37 @@ export default function TravelTipCard({_id, title, description, category, user, 
     return (
     <>
     <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-            {category === "Flight" && <Avatar><FlightIcon/></Avatar>}
-            {category === "Hotel" && <Avatar><BedroomParentIcon/></Avatar>}
-            {category === "Travel" && <Avatar><LuggageIcon/></Avatar>}
-            {category === "Other" && <Avatar><FlightIcon/></Avatar>}
+        <ListItemAvatar sx={{marginRight: "2rem"}}>
+            {category === "Flight" && <Avatar sx={{color:'#ffffff', background:'#ffbd59', width: "50px", height: "50px"}}><FlightTakeoffIcon /></Avatar>}
+            {category === "Hotel" && <Avatar sx={{color:'#ffffff', background:'#ffbd59', width: "50px", height: "50px"}}><BedroomParentIcon/></Avatar>}
+            {category === "Transport" && <Avatar sx={{color:'#ffffff', background:'#ffbd59', width: "50px", height: "50px"}}><DirectionsBusIcon/></Avatar>}
+            {category === "Other" && <Avatar sx={{color:'#ffffff', background:'#ffbd59', width: "50px", height: "50px"}}><HikingIcon/></Avatar>}
         </ListItemAvatar>
-        <ListItemText
-          primary={title}
+        <ListItemText 
+          sx={{ width: "100%" }}
           secondary={
             <React.Fragment>
+               <Typography variant="subtitle2" component="span" sx={{ fontWeight: "700", color: "black", fontSize: "1rem", textTransform: "uppercase" }}>
+                  {title} 
+                </Typography>
+              <Stack spacing={2}>
                 <Typography variant="string" component="span">
-                {description} 
+                  {category} 
                 </Typography>
 
-                <br></br>
-                <br></br>
-                
+                <Typography variant="string" component="span">
+                  {description} 
+                </Typography>
+
                 <Typography variant="span" component="span">
                 By: <Chip label={user && user.name}/>
                 </Typography>
-               
-                
+              </Stack> 
             </React.Fragment>
           }
         />
-      </ListItem>
-      <ListItem alignItems="flex-start">
         <ListItemText
+          sx={{ textAlign: "right" }}
           secondary={
             <React.Fragment>
                 {
@@ -74,22 +77,15 @@ export default function TravelTipCard({_id, title, description, category, user, 
                     user && 
                     loggedInUser._id === user._id &&
                     (  
-                        <IconButton aria-label="delete" color="primary" onClick={(event) => handleDeleteClick(event, _id)}>
-                            <DeleteIcon />
+                        <IconButton sx={{color:'#ffffff', background:'#c81515'}} aria-label="delete" color="primary" onClick={(event) => handleDeleteClick(event, _id)}>
+                            <DeleteForeverIcon />
                         </IconButton>
                     )
-                }    
+                }      
             </React.Fragment>
           }
         />
       </ListItem>
-
-    {/* //   <Divider variant="inset" component="li" />
-    //   <Divider Divider textAlign="left" style={{width:'100%'}}>
-    //                    FLIGHT DETAILS
-    //     </Divider> */}
     </>
-      
-
   );
 }
