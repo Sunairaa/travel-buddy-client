@@ -7,9 +7,7 @@ import Avatar from '@mui/material/Avatar';
 import LoadingButton from '@mui/lab/LoadingButton';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import Checkbox from '@mui/material/Checkbox';
-// import Link from '@mui/material/Link';
+import MuiAlert from '@mui/material/Alert';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -20,6 +18,10 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const API_URL = process.env.REACT_APP_API_URL || "https://long-lime-bat-hose.cyclic.app";
 
 const theme = createTheme();
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+}); 
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
@@ -40,17 +42,13 @@ export default function SignIn() {
     setLoading(true)
     const data = new FormData(event.currentTarget);
     console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+      email: data.get('email')
     });
     const requestBody = { email, password };
  
     axios.post(`${API_URL}/auth/login`, requestBody)
       .then((response) => {
       // Request to the server's endpoint `/auth/login` returns a response
-      // with the JWT string ->  response.data.authToken
-        console.log('JWT token', response.data.authToken );
-
         storeToken(response.data.authToken);
         // Verify the token by sending a request 
         // to the server's JWT validation endpoint. 
@@ -68,7 +66,7 @@ export default function SignIn() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" sx={{ mb: 6}}>
         <CssBaseline />
         <Box
           sx={{
@@ -84,7 +82,7 @@ export default function SignIn() {
           <Typography component="h1" variant="h5">
             Login
           </Typography>
-          <Box component="form" onSubmit={handleLoginSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleLoginSubmit} sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -120,14 +118,20 @@ export default function SignIn() {
               Login
             </LoadingButton>
             <Grid container>
-            { errorMessage && <p className="error-message">{errorMessage}</p> }
-            
-              <Grid container justifyContent="center">
+                        
+            <Grid container justifyContent="center">
               <Grid item>
                 <Link to="/signup" variant="body2" sx={{ textDecoration: "none", color: "#26475E"}}>
                 Don't have an account? Sign Up
                 </Link>
               </Grid>
+              <Grid item>
+              { errorMessage && 
+              <Alert severity="error">
+                {errorMessage}
+              </Alert>}
+              </Grid>
+             
             </Grid>
             </Grid>
           </Box>
