@@ -53,7 +53,7 @@ export default function SignIn() {
         // Verify the token by sending a request 
         // to the server's JWT validation endpoint. 
         authenticateUser();  
-        navigate('/');                             // <== ADD      
+        navigate('/');                            
       })
       .catch((error) => {
         const errorDescription = error.response.data.message;
