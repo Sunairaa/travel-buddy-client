@@ -243,7 +243,7 @@ function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities,
                     date={activity.date}
                     time={activity.time}
                     location={activity.location}
-                    notes={activity.note}
+                    note={activity.note}
                     imageUrl={activity.image || defaultImageUrl}
                     index={index}
                   />
@@ -262,6 +262,7 @@ function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities,
                 <ExpandMoreIcon />
               </ExpandMore>
           </Divider>
+          
           <Collapse in={showRecommendations} timeout="auto" unmountOnExit>
             <Grid container spacing={6}
               justifyContent="center"

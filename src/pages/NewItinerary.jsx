@@ -40,6 +40,7 @@ import {useRef} from 'react';
 import { v4 as uuidv4 } from 'uuid';
 // json data of countries and cities
 import Countries from '../Data/countries.json';
+import MuiAlert from '@mui/material/Alert';
 import service from "../api/service";
 import LoadingButton from '@mui/lab/LoadingButton';
 const API_URL = process.env.REACT_APP_API_URL || "https://long-lime-bat-hose.cyclic.app";
@@ -55,6 +56,10 @@ const MenuProps = {
     },
   },
 };
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+}); 
 
 const countryData = Object.keys(Countries)
 let cityData = []
@@ -75,6 +80,8 @@ function NewItinerary() {
     const [notes, setNotes] = useState([]);
     const [isPublic, setPublic] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
+    const [errorMessage, setErrorMessage] = useState(undefined);
+
     const ref = useRef(null);
     
 
@@ -93,7 +100,6 @@ function NewItinerary() {
     //     notes: [],
     //     isPublic: false
     // });
-    const [errorMessage, setErrorMessage] = useState(undefined);
     
     const navigate = useNavigate();
     
@@ -336,8 +342,9 @@ function NewItinerary() {
             // setPublic(false)
             navigate('/')
         }
-        catch(err) {
-            setErrorMessage(err)
+        catch(error) {
+            const errorDescription = error.response.data.message;
+            setErrorMessage(errorDescription);
         }
         finally{
             setLoading(false)
@@ -364,7 +371,7 @@ function NewItinerary() {
           </Typography>
 
           {/* form */}
-          <Box component="form" noValidate onSubmit={handleNewItinerarySubmit} sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleNewItinerarySubmit} sx={{ mt: 1 }}>
             <Grid container spacing={2}>
             <Grid item container xs={12} justifyContent="flex-start">
                 <Typography variant="overline" display="block" >
@@ -402,7 +409,7 @@ function NewItinerary() {
 
                 <Grid item xs={12}>
                     <FormControl sx={{ width: "100%" }}>
-                        <InputLabel id="demo-multiple-chip-label">Country</InputLabel>
+                        <InputLabel id="demo-multiple-chip-label">Country *</InputLabel>
                         <Select
                         labelId="demo-multiple-chip-label"
                         id="demo-multiple-chip"
@@ -435,11 +442,12 @@ function NewItinerary() {
 
                 <Grid item xs={12}>
                 <FormControl sx={{ width: "100%" }}>
-                    <InputLabel id="demo-multiple-chip-label">City</InputLabel>
+                    <InputLabel id="demo-multiple-chip-label">City *</InputLabel>
                         <Select
                             labelId="demo-multiple-chip-label"
                             id="demo-multiple-chip"
                             multiple
+                            required
                             value={cities}
                             onChange={handleCities}
                             input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
@@ -475,7 +483,7 @@ function NewItinerary() {
                         onChange={(e) => handleItineraryImageUpload(e)}
                         />
                         <label htmlFor="raised-button-file">
-                            <LoadingButton loading={loading} variant="raised" component="span" sx={{ bgcolor: '#ffbd59'}} startIcon={<AddPhotoAlternateIcon />}>
+                            <LoadingButton loading={loading} variant="raised" component="span" sx={{ bgcolor: '#ffbd59', color:'#26475e'}} startIcon={<AddPhotoAlternateIcon />}>
                                 Image
                             </LoadingButton>
                         </label> 
@@ -514,7 +522,6 @@ function NewItinerary() {
                             <Grid item xs={12}>
                                 <TextField
                                 ref={ref}
-                                required
                                 fullWidth
                                 name="airline"
                                 label="Airline"
@@ -551,7 +558,6 @@ function NewItinerary() {
                             <Grid item xs={12}>
                                 <TextField
                                 ref={ref}
-                                required
                                 fullWidth
                                 name="departure"
                                 label="Departure"
@@ -564,10 +570,9 @@ function NewItinerary() {
                             <Grid item xs={12}>
                                 <TextField
                                 ref={ref}
-                                required
                                 fullWidth
                                 name="arrival"
-                                label="Arrive"
+                                label="Arrival"
                                 placeholder='To'
                                 value={flight.arrival}
                                 onChange={(event) => handleFlightDetails(index, event)}
@@ -610,9 +615,8 @@ function NewItinerary() {
 
                            <Grid item xs={12}>
                                 <TextField
-                                required
                                 fullWidth
-                                label="Name"
+                                label="Hotel name"
                                 name="name"
                                 value={hotel.name}
                                 onChange={(event) => handleChangeHotelName(index, event)}
@@ -686,7 +690,6 @@ function NewItinerary() {
 
                             <Grid item xs={12}>
                                 <TextField
-                                required
                                 fullWidth
                                 label="Title"
                                 name="title"
@@ -723,7 +726,6 @@ function NewItinerary() {
 
                             <Grid item xs={12}>
                                 <TextField
-                                required
                                 fullWidth
                                 label="Location"
                                 name="location"
@@ -855,7 +857,11 @@ function NewItinerary() {
               Publish
             </LoadingButton>
 
-            { errorMessage && <p className="error-message">{errorMessage}</p> }
+            { errorMessage && 
+              <Alert severity="error">
+                {errorMessage}
+              </Alert>
+            }
           </Box>
         </Box>
       </Container>
