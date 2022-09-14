@@ -36,6 +36,7 @@ import FormControl from '@mui/material/FormControl';
 import Divider from '@mui/material/Divider';
 import Select from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
+import MuiAlert from '@mui/material/Alert';
 import {useRef} from 'react';
 import { v4 as uuidv4 } from 'uuid';
 // json data of countries and cities
@@ -44,6 +45,7 @@ import service from "../api/service";
 import LoadingButton from '@mui/lab/LoadingButton';
 const API_URL = process.env.REACT_APP_API_URL || "https://long-lime-bat-hose.cyclic.app";
 const ariaLabel = { 'aria-label': 'description' };
+
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -55,6 +57,10 @@ const MenuProps = {
     },
   },
 };
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+}); 
 
 const countryData = Object.keys(Countries)
 let cityData = []
@@ -75,6 +81,8 @@ function ItineraryEdit() {
     const [notes, setNotes] = useState([]);
     const [isPublic, setPublic] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
+    const [errorMessage, setErrorMessage] = useState(undefined);
+
  
     const ref = useRef(null);
     
@@ -94,7 +102,6 @@ function ItineraryEdit() {
     //     notes: [],
     //     isPublic: false
     // });
-    const [errorMessage, setErrorMessage] = useState(undefined);
     
     const navigate = useNavigate();
     
@@ -269,8 +276,9 @@ function ItineraryEdit() {
             { headers: { Authorization: `Bearer ${storedToken}` } })
             navigate(`/itineraries/${itineraryId}`)
         }
-        catch(err) {
-            setErrorMessage(err)
+        catch(error) {
+            const errorDescription = error.response.data.message;
+            setErrorMessage(errorDescription);
         }
         finally {
             setLoading(false)
@@ -388,7 +396,7 @@ function ItineraryEdit() {
           </Typography>
 
           {/* form */}
-          <Box component="form" noValidate onSubmit={handleNewItinerarySubmit} sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleNewItinerarySubmit} sx={{ mt: 1 }}>
             <Grid container spacing={2}>
             <Grid item container xs={12} justifyContent="flex-start">
                 <Typography variant="overline" display="block" >
@@ -872,8 +880,10 @@ function ItineraryEdit() {
             >
               Update
             </LoadingButton>
-
-            { errorMessage && <p className="error-message">{errorMessage}</p> }
+            { errorMessage && 
+              <Alert severity="error">
+                {errorMessage}
+              </Alert>}
           </Box>
         </Box>
       </Container>

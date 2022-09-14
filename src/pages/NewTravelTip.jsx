@@ -95,7 +95,7 @@ function NewTravelTip() {
           </Typography>
 
           {/* form */}
-          <Box component="form" noValidate onSubmit={handleNewTipSubmit} sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleNewTipSubmit} sx={{ mt: 1 }}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <TextField
@@ -115,7 +115,7 @@ function NewTravelTip() {
                         minRows={4}
                         name="description"
                         label="Description"
-                        placeholder="Description"
+                        placeholder="Description *"
                         value={description}
                         onChange={handleDescription}
                         style={{ width: "100%", padding: "inherit", font: "inherit", borderRadius: "3px", borderColor: "#c4c4c4" }}
@@ -124,7 +124,7 @@ function NewTravelTip() {
                
                 <Grid item xs={12}>
                 <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Category</InputLabel>
+                    <InputLabel id="demo-simple-select-label">Category *</InputLabel>
                     <Select
                     required
                     labelId="demo-simple-select-label"
