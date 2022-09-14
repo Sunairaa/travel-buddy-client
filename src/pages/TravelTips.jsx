@@ -63,7 +63,7 @@ function TravelTips() {
         )) || (
 
 
-        <Grid container spacing={2} sx={{ justifyContent: "center" , alignContent: "center"}} >
+        <Grid container spacing={2} sx={{ justifyContent: "center" , alignContent: "center", mb: 8}} >
             <Grid xs={12} sx={{ fontWeight: "700", fontSize: "1rem", margin: "2em 0", textTransform: "uppercase", padding: "2em"}}>
                 <Typography variant="h5" component="span" sx={{ fontWeight: "700", color: "#26475e", fontSize: "2rem", textTransform: "uppercase" }}>
                   Travel Tips

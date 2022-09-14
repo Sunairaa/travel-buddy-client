@@ -8,7 +8,7 @@ import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
@@ -86,16 +86,22 @@ function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities,
     <Container maxWidth="xl" style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
       <Card sx={{ width: '90%', margin:8, background: "#c0c1c014"}}>
         <CardHeader
-          sx={{ padding: 0 }}
+          sx={{ pt:2, px:2 , background: "#ffbd59"}}
           action={
             <>
             {isOwner && 
             <div>
-              <IconButton aria-label="settings" onClick={handleDeleteClick}> 
-                <DeleteIcon />
+              <IconButton onClick={handleDeleteClick} sx={{color:'#ffffff', background:'#c81515', mr: 1}} aria-label="delete" color="primary">
+                <DeleteForeverIcon />
               </IconButton>
+              {/* <IconButton aria-label="settings" onClick={handleDeleteClick}> 
+                <DeleteForeverIcon />
+              </IconButton> */}
               <Link to={`/itineraries/edit/${id}`}>
-                <IconButton aria-label="settings">
+                {/* <IconButton aria-label="settings">
+                  <EditIcon />
+                </IconButton> */}
+                <IconButton sx={{color:'#ffffff', background:'#26475e'}} color="primary">
                   <EditIcon />
                 </IconButton>
               </Link>
