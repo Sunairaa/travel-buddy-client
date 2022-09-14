@@ -50,6 +50,7 @@ function UserSpecificItineraries() {
             >
               <ItineraryCard 
                 title={itinerary.title}
+                countries={itinerary.countries}
                 cities={itinerary.cities}
                 user={itinerary.user}
                 imageUrl={itinerary.imageUrl || defaultImageUrl}
