@@ -5,9 +5,7 @@ import axios from "axios";
 import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import Checkbox from '@mui/material/Checkbox';
-// import Link from '@mui/material/Link';
+import MuiAlert from '@mui/material/Alert';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -19,6 +17,10 @@ const API_URL = process.env.REACT_APP_API_URL || "https://long-lime-bat-hose.cyc
 
 
 const theme = createTheme();
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+}); 
 
 export default function SignUp() {
     const [email, setEmail] = useState("");
@@ -38,8 +40,7 @@ export default function SignUp() {
     setLoading(true)
     const data = new FormData(event.currentTarget);
     console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+      email: data.get('email')
     });
      // Create an object representing the request body
      const requestBody = { email, password, name };
@@ -62,7 +63,7 @@ export default function SignUp() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" sx={{ mb: 6}}>
         <CssBaseline />
         <Box
           sx={{
@@ -78,7 +79,7 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSignupSubmit} sx={{ mt: 3 }}>
+          <Box component="form" onSubmit={handleSignupSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -124,12 +125,17 @@ export default function SignUp() {
             >
               Sign Up
             </LoadingButton>
-            { errorMessage && <p className="error-message">{errorMessage}</p> }
             <Grid container justifyContent="center">
               <Grid item>
                 <Link to="/login" variant="body2" sx={{ textDecoration: "none", color: "#26475E"}}>
                   Already have an account? Login
                 </Link>
+              </Grid>
+              <Grid item>
+              { errorMessage && 
+              <Alert sx={{mt: 2 }} severity="error">
+                {errorMessage}
+              </Alert>}
               </Grid>
             </Grid>
           </Box>
