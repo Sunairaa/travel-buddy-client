@@ -62,9 +62,9 @@ function Profile() {
                   User information
                 </Typography>
 
-                <Avatar style={{margin:'8px'}} alt="Remy Sharp" src={user.imageUrl} />
+                <Avatar sx={{ width: 90, height: 90 }} style={{margin:'8px'}} alt="Remy Sharp" src={user.imageUrl} />
 
-                <Grid item container xs={12} justifyContent="center" style={{margin:'8px'}} sx={{ pl: 2}}>
+                <Grid item container xs={12} justifyContent="center" style={{margin:'8px 8px 8px 0px'}} sx={{ pl: 2}}>
                       <Input
                           accept="image/*"
                           style={{ display: 'none' }}
