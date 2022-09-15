@@ -20,7 +20,6 @@ import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-// import logo from '../../src/logo.png';
 import useravatar from '../../src/user.png';
 
 
@@ -124,10 +123,16 @@ const Navbar = () => {
               {isLoggedIn && (
                 <div>
                     <MenuItem onClick={handleCloseNavMenu}>
-                        <NavLink to="/" className={({ isActive }) => isActive ? "selected" : ""}> <Button variant="text" sx={{ my: 2, color: 'black', display: 'block' }}>Home</Button> </NavLink>
+                        <NavLink to="/home" className={({ isActive }) => isActive ? "selected" : ""}> <Button variant="text" sx={{ my: 2, color: 'black', display: 'block' }}>Home</Button> </NavLink>
                     </MenuItem>
                     <MenuItem onClick={handleCloseNavMenu}>
-                        <NavLink to="/" className={({ isActive }) => isActive ? "selected" : ""}> <Button variant="text" sx={{ my: 2, color: 'black', display: 'block' }}>Itenaries</Button> </NavLink>
+                      <NavLink to="/itineraries" className={({ isActive }) => isActive ? "selected" : ""}> <Button variant="text" sx={{ my: 2, mx: 1, color: 'black', display: 'block' }}>Itineraries</Button> </NavLink>
+                    </MenuItem>
+                    <MenuItem onClick={handleCloseNavMenu}>
+                      <NavLink to="/profile/itineraries" className={({ isActive }) => isActive ? "selected" : ""}> <Button variant="text" sx={{ my: 2, mx: 1, color: 'black', display: 'block' }}>My Itineraries</Button> </NavLink>
+                    </MenuItem>
+                    <MenuItem onClick={handleCloseNavMenu}>
+                      <NavLink to="/traveltips" className={({ isActive }) => isActive ? "selected" : ""}> <Button variant="text" sx={{ my: 2, mx: 1, color: 'black', display: 'block' }}>Travel Tips</Button> </NavLink>
                     </MenuItem>
               </div>
               )}
@@ -172,10 +177,12 @@ const Navbar = () => {
               {isLoggedIn && (
                 <>
            
-              <NavLink to="/" className={({ isActive }) => isActive ? "selected" : ""}> <Button variant="text" sx={{ my: 2, mx: 1, color: 'white', display: 'block' }}>Home</Button> </NavLink>
+              <NavLink to="/home" className={({ isActive }) => isActive ? "selected" : ""}> <Button variant="text" sx={{ my: 2, mx: 1, color: 'white', display: 'block' }}>Home</Button> </NavLink>
              
               <NavLink to="/itineraries" className={({ isActive }) => isActive ? "selected" : ""}> <Button variant="text" sx={{ my: 2, mx: 1, color: 'white', display: 'block' }}>Itineraries</Button> </NavLink>
             
+              <NavLink to="/profile/itineraries" className={({ isActive }) => isActive ? "selected" : ""}> <Button variant="text" sx={{ my: 2, mx: 1, color: 'white', display: 'block' }}>My Itineraries</Button> </NavLink>
+              
               <NavLink to="/traveltips" className={({ isActive }) => isActive ? "selected" : ""}> <Button variant="text" sx={{ my: 2, mx: 1, color: 'white', display: 'block' }}>Travel Tips</Button> </NavLink>
                 
               </>

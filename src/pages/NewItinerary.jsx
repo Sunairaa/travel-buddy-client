@@ -340,7 +340,7 @@ function NewItinerary() {
             // })
             // setNotes([])
             // setPublic(false)
-            navigate('/')
+            navigate('/profile/itineraries')
         }
         catch(error) {
             const errorDescription = error.response.data.message;

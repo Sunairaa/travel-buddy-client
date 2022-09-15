@@ -7,6 +7,7 @@ import Login from "../src/pages/Login";
 import IsAnon from "./components/IsAnon";
 import IsPrivate from "./components/IsPrivate";
 import Home from "./pages/Home";
+import Index from "./pages/Index";
 import NewItinerary from "./pages/NewItinerary";
 import ItineraryEdit from "./pages/ItineraryEdit";
 import Footer from "./components/Footer";
@@ -23,7 +24,8 @@ function App() {
     <div className="App">
       <Navbar />
         <Routes>
-          <Route path="/" element={<Home /> } />
+          <Route path="/home" element={<IsPrivate> <Home /> </IsPrivate> } />
+          <Route path="/" element={<Index /> }></Route>
           <Route path="/new-itinerary" element={<IsPrivate> <NewItinerary /> </IsPrivate>} />
           <Route path="/itineraries/edit/:itineraryId" element={<IsPrivate> <ItineraryEdit /> </IsPrivate>}/>
           <Route path="/signup" element={<IsAnon> <Signup /> </IsAnon>} />
