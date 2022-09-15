@@ -72,7 +72,7 @@ function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities,
     axios
       .delete(`${API_URL}/api/itineraries/${id}`, { headers: { Authorization: `Bearer ${storedToken}` } })
       .then(() => {
-        navigate("/itineraries");
+        navigate("/profile/itineraries");
       })
       .catch((error) => {
         const errorDescription = error.response.data.message;
@@ -94,13 +94,7 @@ function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities,
               <IconButton onClick={handleDeleteClick} sx={{color:'#ffffff', background:'#c81515', mr: 1}} aria-label="delete" color="primary">
                 <DeleteForeverIcon />
               </IconButton>
-              {/* <IconButton aria-label="settings" onClick={handleDeleteClick}> 
-                <DeleteForeverIcon />
-              </IconButton> */}
               <Link to={`/itineraries/edit/${id}`}>
-                {/* <IconButton aria-label="settings">
-                  <EditIcon />
-                </IconButton> */}
                 <IconButton sx={{color:'#ffffff', background:'#26475e'}} color="primary">
                   <EditIcon />
                 </IconButton>
