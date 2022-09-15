@@ -8,9 +8,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Input from '@mui/material/Input';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import Checkbox from '@mui/material/Checkbox';
-// import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LuggageIcon from '@mui/icons-material/Luggage';
@@ -43,6 +40,7 @@ import Countries from '../Data/countries.json';
 import MuiAlert from '@mui/material/Alert';
 import service from "../api/service";
 import LoadingButton from '@mui/lab/LoadingButton';
+import AddContributorFields from '../components/AddContributorFields';
 const API_URL = process.env.REACT_APP_API_URL || "https://long-lime-bat-hose.cyclic.app";
 const ariaLabel = { 'aria-label': 'description' };
 
@@ -79,28 +77,18 @@ function NewItinerary() {
     }]);
     const [notes, setNotes] = useState([]);
     const [isPublic, setPublic] = React.useState(false);
+    const [contributorEmail, setContributorEmail] = React.useState(undefined);
+    const [contributorField, setContributorField] = React.useState(false);
+    const [isReadonly, setIsReadonly] = React.useState(false);
+    const [displayConfirmButton, setDisplayConfirmButton] = React.useState(true);
+    const [hideRemoveBtn, setHideRemoveBtn] = React.useState(false);
+    const [notFound, setNotFound] = React.useState(undefined);
+    const [disablePublish, setDisablePublish] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
     const [errorMessage, setErrorMessage] = useState(undefined);
 
     const ref = useRef(null);
-    
-
-    // const [value, setValue] = React.useState(dayjs());
-    // const [newItinerary, setNewItinerary] = useState({
-    //     title: "",
-    //     imageUrl: "",
-    //     duration: "",
-    //     countries: [],
-    //     cities: [],
-    //     flightDetails: [{
-
-    //     }],
-    //     hotelDetails: [],
-    //     activities: [],
-    //     notes: [],
-    //     isPublic: false
-    // });
-    
+   
     const navigate = useNavigate();
     
 
@@ -258,6 +246,44 @@ function NewItinerary() {
         setNotes(values);
     }
 
+    const handleContributor = (e) => {
+        setContributorEmail(e.target.value)
+        console.log(e.target.value)
+    }
+
+    const confirmContributor = () => {        
+        // Get the token from the localStorage
+        const storedToken = localStorage.getItem('authToken');
+        axios.get( `${API_URL}/api/user/${contributorEmail}`,  { headers: { Authorization: `Bearer ${storedToken}` } })
+        .then(response => {
+            if (response.data === null) {
+                setNotFound("User Not Found");
+                setDisablePublish(true)
+            } else if (response.data.email === contributorEmail) {
+                setIsReadonly(true)
+                setDisplayConfirmButton(false)
+                setNotFound(undefined)
+                setDisablePublish(false)
+            } 
+        })
+        .catch(err => console.log(err))
+    }
+
+    const handleAddContributor = () => {
+        setContributorField(true)
+        setDisplayConfirmButton(true)
+        setIsReadonly(false)
+        setContributorEmail(undefined)
+
+    }
+
+    const handleDeleteContributor = () => {
+        setContributorField(false)
+        setNotFound(undefined)
+        setDisablePublish(false)
+        setContributorEmail(undefined)
+    }
+
     // ******** this method handles the file upload ********
     const handleItineraryImageUpload = (e) => {
         console.log("Itinerary Image")
@@ -318,28 +344,15 @@ function NewItinerary() {
         event.preventDefault();
         setLoading(true)
         const body = {
-            title, imageUrl, duration, countries, cities, flightDetails, hotelDetails, activities, notes, isPublic
+            title, imageUrl, duration, countries, cities, flightDetails, hotelDetails, activities, notes, isPublic, contributorEmail
         }
-        console.log(body)
         // Get the token from the localStorage
         const storedToken = localStorage.getItem('authToken');
         try{
             const addNewItinerary = await axios.post(`${API_URL}/api/itineraries`, 
             body,
             { headers: { Authorization: `Bearer ${storedToken}` } })
-            console.log(addNewItinerary)
-            // setTitle("")
-            // setImageUrl("")
-            // setDuration("") 
-            // setCountries([])
-            // setCities([])
-            // setFlightDetails([])
-            // setHotelDetails([]) 
-            // setActivities({
-            //     title: "", date: dayjs(), time: dayjs(), location: "", note: "", imageUrl: ""
-            // })
-            // setNotes([])
-            // setPublic(false)
+
             navigate('/profile/itineraries')
         }
         catch(error) {
@@ -631,9 +644,6 @@ function NewItinerary() {
                                     name="checkin"
                                     value={hotel.checkin}
                                     onChange={(event) => handleChangeCheckin(index, event)}
-                                    // onChange={(newValue) => {
-                                    //     setValue(newValue);
-                                    // }}
                                     renderInput={(params) => <TextField {...params} helperText={null} />}
                                     />
                                 </LocalizationProvider>
@@ -845,10 +855,38 @@ function NewItinerary() {
                     </Button>
                 </Grid>
                 
+
+                <Grid container item xs={12} justifyContent="flex-start" sx={{ mt: 4}}>      
+                    <Divider Divider textAlign="left" style={{width:'100%'}}>
+                       CONTRIBUTOR
+                    </Divider>
+                </Grid>
+                
+                {!contributorField && (
+                    <Grid item container xs={12} justifyContent="flex-start" sx={{ pl: 2}}>
+                    <Button variant="outlined" onClick={handleAddContributor} startIcon={<AddIcon />}>
+                        Contributor
+                    </Button>
+                 </Grid>
+                )}
+                
+                {contributorField && <AddContributorFields 
+                    contributorEmail={contributorEmail} 
+                    isReadonly={isReadonly} 
+                    handleContributor={handleContributor} 
+                    confirmContributor={confirmContributor} 
+                    handleDeleteContributor={handleDeleteContributor}
+                    displayConfirmButton={displayConfirmButton}
+                    notFound={notFound}
+                    hideRemoveBtn={hideRemoveBtn}
+                />}
+
+                
             </Grid>
            
             <LoadingButton
               type="submit"
+              disabled={disablePublish}
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2, bgcolor: "#26475E" }}
@@ -862,11 +900,13 @@ function NewItinerary() {
                 {errorMessage}
               </Alert>
             }
+
           </Box>
         </Box>
       </Container>
     </ThemeProvider>
-  );
+  );  
 }
+
 
 export default NewItinerary;

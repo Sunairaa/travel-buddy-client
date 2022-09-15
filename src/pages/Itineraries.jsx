@@ -76,6 +76,7 @@ function Itineraries() {
                 imageUrl={itinerary.imageUrl || defaultImageUrl}
                 notes={itinerary.notes}
                 id={itinerary._id}
+                contributorId={itinerary.contributor}
               />
             </Grid>
           )

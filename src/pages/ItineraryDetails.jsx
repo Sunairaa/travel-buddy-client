@@ -11,6 +11,7 @@ const API_URL = process.env.REACT_APP_API_URL || "https://long-lime-bat-hose.cyc
 function ItineraryDetails() {
   const [itinerary, setItinerary] = useState(null)
   const [isOwner, setOwner] = useState(false)
+  const [isContributor, setContributor] = useState(false)
   const {id} = useParams()
   const defaultImageUrl = 'https://images.unsplash.com/photo-1499591934245-40b55745b905?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2372&q=80'
 
@@ -25,6 +26,7 @@ function ItineraryDetails() {
       .then(response => {
         setItinerary(response.data.itinerary)
         setOwner(response.data.isOwner)
+        setContributor(response.data.isContributor)
       })
       .catch(err => console.log(err))
 
@@ -52,6 +54,7 @@ function ItineraryDetails() {
         hotelDetails={itinerary.hotelDetails}
         activities={itinerary.activities}
         isOwner={isOwner}
+        isContributor={isContributor}
       />
       )}
     </div>

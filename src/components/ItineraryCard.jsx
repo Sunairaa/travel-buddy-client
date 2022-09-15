@@ -5,8 +5,14 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import {Link} from 'react-router-dom';
 import { Chip } from '@mui/material';
+import { useContext } from "react";                     
+import { AuthContext } from "../context/auth.context";   
+import StarsIcon from '@mui/icons-material/Stars';
 
-function ItineraryCard({title, cities, countries, user, imageUrl, notes, id}) {
+function ItineraryCard({title, cities, countries, user, imageUrl, notes, id, contributorId}) {
+  const isLoggedIn = useContext(AuthContext).isLoggedIn;
+  const loggedInUser = useContext(AuthContext).user;
+
   return (
     <Card sx={{ width: '90%', marginBottom:8, maxWidth:500}}>
       <CardMedia
@@ -49,9 +55,23 @@ function ItineraryCard({title, cities, countries, user, imageUrl, notes, id}) {
               })}
             </ul>
         </div>
-        
-        <Typography variant="body2" color="text.secondary" style={{mt: 4, textAlign:'end'}}>
-          By: {user && user.name}
+
+        <Typography variant="body2" color="text.secondary" sx={{mt: 4, display:'flex', justifyContent:"space-between", alignItems: "center"}}>
+        {isLoggedIn && loggedInUser._id === contributorId &&
+          (
+            <Chip sx={{mr:1}} color="primary" label="Contributor" icon={<StarsIcon />} />
+          )
+        }
+
+
+        {isLoggedIn && user && loggedInUser._id === user._id &&
+          (
+            <Chip sx={{mr:1}} color="primary" label="Owner" icon={<StarsIcon />} />
+          )
+        }
+
+
+        <Chip sx={{bgcolor:"#ffbd59" , color:"#26475e", alignSelf:"right", ml: "auto"}} label={user && `By: ${user.name}`}/>
         </Typography>
       </CardContent>
     </Card>

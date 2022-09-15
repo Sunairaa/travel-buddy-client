@@ -39,7 +39,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities, countries, notes, flightDetails, hotelDetails, activities, id }) {
+function ItineraryDetailsCard({isOwner, isContributor, title, duration, imageUrl, user, cities, countries, notes, flightDetails, hotelDetails, activities, id }) {
   const [showFlights, setShowFlights] = React.useState(true);
   const [showHotels, setShowHotels] = React.useState(true);
   const [showActivities, setShowActivities] = React.useState(true);
@@ -89,18 +89,20 @@ function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities,
           sx={{ pt:2, px:2}}
           action={
             <>
-            {isOwner && 
             <div>
+              {(isOwner) && 
               <IconButton onClick={handleDeleteClick} sx={{color:'#ffffff', background:'#c81515', mr: 1}} aria-label="delete" color="primary">
                 <DeleteForeverIcon />
               </IconButton>
+              }
+              {(isOwner || isContributor) && 
               <Link to={`/itineraries/edit/${id}`}>
                 <IconButton sx={{color:'#ffffff', background:'#26475e'}} color="primary">
                   <EditIcon />
                 </IconButton>
               </Link>
+              }
             </div>
-            }
             </>
           }
           />
@@ -122,7 +124,7 @@ function ItineraryDetailsCard({isOwner, title, duration, imageUrl, user, cities,
         />
         <CardContent>
           <Typography variant="body2" color="text.secondary" style={{textAlign:'end'}}>
-           <Chip label={`By: ${user.name}`} />
+           <Chip sx={{bgcolor:"#ffbd59" , color:"#26475e"}} label={`By: ${user.name}`} />
           </Typography>
           <Typography variant="body2" color="text.secondary" style={{padding:0, margin:"1em", display:'flex', justifyContent:'center'}}>
           <Typography gutterBottom variant="h5" component="div">
