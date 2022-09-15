@@ -24,8 +24,6 @@ export default function TravelTipCard({_id, title, description, category, user, 
 
     const isLoggedIn = useContext(AuthContext).isLoggedIn;
     const loggedInUser = useContext(AuthContext).user;
-    console.log("logged in user",loggedInUser)
-    console.log("owner travel tip", user)
     const handleDeleteClick = (event, id) => {
         const storedToken = localStorage.getItem('authToken');
         axios

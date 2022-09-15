@@ -8,9 +8,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Input from '@mui/material/Input';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import Checkbox from '@mui/material/Checkbox';
-// import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LuggageIcon from '@mui/icons-material/Luggage';
@@ -21,7 +18,6 @@ import Typography from '@mui/material/Typography';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 import dayjs from 'dayjs';
 import Container from '@mui/material/Container';
@@ -43,6 +39,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Countries from '../Data/countries.json';
 import service from "../api/service";
 import LoadingButton from '@mui/lab/LoadingButton';
+import AddContributorFields from '../components/AddContributorFields';
 const API_URL = process.env.REACT_APP_API_URL || "https://long-lime-bat-hose.cyclic.app";
 const ariaLabel = { 'aria-label': 'description' };
 
@@ -80,31 +77,19 @@ function ItineraryEdit() {
     }]);
     const [notes, setNotes] = useState([]);
     const [isPublic, setPublic] = React.useState(false);
+    const [contributorEmail, setContributorEmail] = React.useState(undefined);
+    const [contributorField, setContributorField] = React.useState(false);
+    const [isReadonly, setIsReadonly] = React.useState(false);
+    const [displayConfirmButton, setDisplayConfirmButton] = React.useState(true);
+    const [hideRemoveBtn, setHideRemoveBtn] = React.useState(false);
+    const [notFound, setNotFound] = React.useState(undefined);
+    const [disablePublish, setDisablePublish] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
     const [errorMessage, setErrorMessage] = useState(undefined);
 
- 
     const ref = useRef(null);
     
-
-    // const [value, setValue] = React.useState(dayjs());
-    // const [newItinerary, setNewItinerary] = useState({
-    //     title: "",
-    //     imageUrl: "",
-    //     duration: "",
-    //     countries: [],
-    //     cities: [],
-    //     flightDetails: [{
-
-    //     }],
-    //     hotelDetails: [],
-    //     activities: [],
-    //     notes: [],
-    //     isPublic: false
-    // });
-    
     const navigate = useNavigate();
-    
 
     const handleTitle = (e) => {
         setTitle(e.target.value)
@@ -158,14 +143,12 @@ function ItineraryEdit() {
         let data = [...flightDetails];
         data[index]['date'] = event;
         setFlightDetails(data);
-        console.log(event)
     };
 
     const handleFlightTime = (index, event) => {
         let data = [...flightDetails];
         data[index]['time'] = event;
         setFlightDetails(data);
-        console.log(event)
     };
 
     const handleDeleteFlight = (index) => {
@@ -192,14 +175,12 @@ function ItineraryEdit() {
         let data = [...hotelDetails];
         data[index]['checkin'] = event;
         setHotelDetails(data);
-        console.log(event)
     };
 
     const handleChangeCheckout = (index, event) => {
         let data = [...hotelDetails];
         data[index]['checkout'] = event;
         setHotelDetails(data);
-        console.log(event)
     };
 
     const handleDeleteHotel = (index) => {
@@ -226,14 +207,12 @@ function ItineraryEdit() {
         let data = [...activities];
         data[index]['date'] = event;
         setActivities(data);
-        console.log(event)
     }
 
     const handleChangeActivityTime = (index, event) => {
         let data = [...activities];
         data[index]['time'] = event;
         setActivities(data);
-        console.log(event)
     };
 
     const handleDeleteActivity = (index) => {
@@ -260,12 +239,48 @@ function ItineraryEdit() {
         setNotes(values);
     }
 
+    const handleContributor = (e) => {
+        setContributorEmail(e.target.value)
+    }
+
+    const confirmContributor = () => {        
+        // Get the token from the localStorage
+        const storedToken = localStorage.getItem('authToken');
+        axios.get( `${API_URL}/api/user/${contributorEmail}`,  { headers: { Authorization: `Bearer ${storedToken}` } })
+        .then(response => {
+            if (response.data === null) {
+                setNotFound("User Not Found");
+                setDisablePublish(true)
+            } else if (response.data.email === contributorEmail) {
+                setIsReadonly(true)
+                setDisplayConfirmButton(false)
+                setNotFound(undefined)
+                setDisablePublish(false)
+            } 
+        })
+        .catch(err => console.log(err))
+    }
+
+    const handleAddContributor = () => {
+        setContributorField(true)
+        setDisplayConfirmButton(true)
+        setIsReadonly(false)
+        setContributorEmail(undefined)
+    }
+
+    const handleDeleteContributor = () => {
+        setContributorField(false)
+        setNotFound(undefined)
+        setDisablePublish(false)
+        setContributorEmail(undefined)
+    }
+
     const { itineraryId } = useParams();
     const handleNewItinerarySubmit = async (event) => {
         event.preventDefault();
         setLoading(true)
         const body = {
-            title, imageUrl, duration, countries, cities, flightDetails, hotelDetails, activities, notes, isPublic
+            title, imageUrl, duration, countries, cities, flightDetails, hotelDetails, activities, notes, isPublic, contributorEmail
         }
         console.log(body)
         // Get the token from the localStorage
@@ -290,8 +305,6 @@ function ItineraryEdit() {
     const handleItineraryImageUpload = (e) => {
         console.log("Itinerary Image")
         setLoading(true)
-
-        // console.log("The file to be uploaded is: ", e.target.files[0]);
     
         const uploadData = new FormData();
     
@@ -302,7 +315,6 @@ function ItineraryEdit() {
         service
         .uploadImage(uploadData)
         .then(response => {
-            // console.log("response is: ", response);
             // response carries "fileUrl" which we can use to update the state
             setImageUrl(response.fileUrl);
         })
@@ -318,8 +330,6 @@ function ItineraryEdit() {
      const handleActivityImageUpload = (index, e) => {
         console.log("Activity Image")
         setLoading(true)
-
-        // console.log("The file to be uploaded is: ", e.target.files[0]);
      
         const uploadData = new FormData();
      
@@ -332,11 +342,9 @@ function ItineraryEdit() {
           .then(response => {
             // console.log("response is: ", response);
             // response carries "fileUrl" which we can use to update the state
-            // setImageUrl(response.fileUrl);
             let data = [...activities];
             data[index]['image'] = response.fileUrl;
             setActivities(data);
-            // console.log(event)
           })
           .catch(err => console.log("Error while uploading the file: ", err))
           .finally(() => {
@@ -357,8 +365,7 @@ function ItineraryEdit() {
               )
             .then((response) => {
                 const itineraryToEdit = response.data.itinerary;
-                console.log(itineraryToEdit)
-                if(!response.data.isOwner) {
+                if(!response.data.isOwner && !response.data.isContributor) {
                     navigate('/itineraries');
                 }
                 setTitle(itineraryToEdit.title)
@@ -371,6 +378,15 @@ function ItineraryEdit() {
                 setActivities(itineraryToEdit.activities)
                 setNotes(itineraryToEdit.notes)
                 setPublic(itineraryToEdit.isPublic)
+                if (itineraryToEdit.contributor != undefined) {
+                    setContributorEmail(itineraryToEdit.contributor.email)
+                    setContributorField(true)
+                    setDisplayConfirmButton(false)
+                    if (itineraryToEdit.contributor._id != itineraryToEdit.user_id) {
+                        console.log("same same")
+                        setHideRemoveBtn(true)
+                    }
+                }
             })
             .catch((err) => {
                 setErrorMessage(err)
@@ -869,10 +885,38 @@ function ItineraryEdit() {
                     </Button>
                 </Grid>
                 
+                <Grid container item xs={12} justifyContent="flex-start" sx={{ mt: 4}}>      
+                    <Divider Divider textAlign="left" style={{width:'100%'}}>
+                       CONTRIBUTOR
+                    </Divider>
+                </Grid>
+                
+                {!contributorField && (
+                    <Grid item container xs={12} justifyContent="flex-start" sx={{ pl: 2}}>
+                    <Button variant="outlined" onClick={handleAddContributor} startIcon={<AddIcon />}>
+                        Contributor
+                    </Button>
+                 </Grid>
+                )}
+                
+                {contributorField && <AddContributorFields 
+                    contributorEmail={contributorEmail} 
+                    isReadonly={isReadonly} 
+                    handleContributor={handleContributor} 
+                    confirmContributor={confirmContributor} 
+                    handleDeleteContributor={handleDeleteContributor}
+                    displayConfirmButton={displayConfirmButton}
+                    notFound={notFound}
+                    hideRemoveBtn={hideRemoveBtn}
+                />}
+
+                
+        
             </Grid>
            
             <LoadingButton 
               type="submit"
+              disabled={disablePublish}
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2, bgcolor: "#26475E" }}
