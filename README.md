@@ -127,6 +127,8 @@ Travel Tip model
 | POST        | `/auth/login`                 | {username, password}         | 200            | 401          | Checks if fields not empty (422), if user exists (404), and if password matches (404), then stores user in session    |
 | POST        | `/auth/logout`                | (empty)                      | 204            | 400          | Logs out the user                                          |
 
+<br>
+
 ## Links
 
 ### Trello/Kanban
