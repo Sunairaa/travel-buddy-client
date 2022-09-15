@@ -23,7 +23,7 @@ function FeatureSection() {
       component="section"
       sx={{ display: 'flex', bgcolor: '#f4f4f4'}}
     >
-      <Container sx={{ mt: 15, mb: 30, display: 'flex', position: 'relative'}}>
+      <Container sx={{ mt: 15, mb: 15, display: 'flex', position: 'relative'}}>
         <Box
           component="img"
           src={patternImage}
@@ -35,19 +35,19 @@ function FeatureSection() {
             <Box sx={item}>
               <TaskAltIcon sx={{ color: "#26475e"}}/>
               <Typography variant="h6" sx={{ my: 5, textTransform: "uppercase" }}>
-                View Fascinating Itineries
+                View Fascinating Itineraries
               </Typography>
               <Typography variant="body1">
                 {
-                  'Romantic Paris, Fascinating Tokyo, Dreamy New York City? '
+                  'Romantic Paris, fascinating Tokyo, dreamy New York City? '
                 }
 
                 {
-                  'Explore and get inspired from a pool of wonderful travel itineries, created by community of amazing travellers.'
+                  'Explore and get inspired from a pool of wonderful travel itineraries, created by a community of amazing travellers.'
                 }
               </Typography>
                 <Link to='/itineraries'>
-                    <Button variant="raised" component="span" sx={{ textAlign:"left", bgcolor: '#ffbd59', marginTop:'12px'}}>
+                    <Button variant="raised" component="span" sx={{ textAlign:"left", bgcolor: '#ffbd59', marginTop:'20px'}}>
                         Explore Itineraries
                     </Button>
                 </Link>
@@ -67,8 +67,8 @@ function FeatureSection() {
                 {'Plan and manage your next exciting travel itinerary digitally and also contribute to the community by sharing it publicly.'}
               </Typography>
               <Link to='/new-itinerary'>
-                    <Button variant="raised" component="span" sx={{ textAlign:"left", bgcolor: '#ffbd59', marginTop:'12px'}}>
-                    Creat an Itinerary
+                    <Button variant="raised" component="span" sx={{ textAlign:"left", bgcolor: '#ffbd59', marginTop:'20px'}}>
+                    Create an Itinerary
                     </Button>
                 </Link>
             </Box>
@@ -77,14 +77,14 @@ function FeatureSection() {
             <Box sx={item}>
               <TaskAltIcon sx={{ color: "#26475e"}}/>
               <Typography variant="h6" sx={{ my: 5, textTransform: "uppercase" }}>
-                View Travel Tips
+                View Community's Travel Tips
               </Typography>
               <Typography variant="body1">
                 {'Want to learn amazing ways to take your travel to next level?'}
-                {' View wonderful travel tips shared by the community.'}
+                {' View wonderful travel tips shared by the community. You can also share your travel tips so everyone can benefit!'}
               </Typography>
               <Link to='/traveltips'>
-                    <Button variant="raised" component="span" sx={{ textAlign:"left", bgcolor: '#ffbd59', marginTop:'12px'}}>
+                    <Button variant="raised" component="span" sx={{ textAlign:"left", bgcolor: '#ffbd59', marginTop:'20px'}}>
                         Travel Tips
                     </Button>
                 </Link>

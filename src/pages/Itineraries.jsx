@@ -7,11 +7,14 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography'
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import Searchbar from '../components/Searchbar'
+
 
 const API_URL = process.env.REACT_APP_API_URL || "https://long-lime-bat-hose.cyclic.app";
 
 function Itineraries() {
   const [itineraries, setItineraries] = useState(null)
+  const [inputText, setInputText] = useState("")
   const defaultImageUrl = 'https://images.unsplash.com/photo-1499591934245-40b55745b905?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2372&q=80'
 
   useEffect(() => {
@@ -23,6 +26,16 @@ function Itineraries() {
       .catch(err => console.log(err))
 
   }, [])
+
+  const filteredItineraries = (itineraries || []).filter((item) => {
+    return(
+      item.title.toLowerCase().includes(inputText) ||
+      item.countries.join().toLowerCase().includes(inputText) ||
+      item.cities.join().toLowerCase().includes(inputText) ||
+      item.user.name.toLowerCase().includes(inputText)
+    )
+  })
+
 
   return (
     <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
@@ -38,14 +51,16 @@ function Itineraries() {
                 <Typography variant="h5" component="span" sx={{ fontWeight: "700", color: "#26475e", fontSize: "2rem", textTransform: "uppercase" }}>
                 Itineraries
                 </Typography>
+                <Searchbar inputText={inputText} setInputText={setInputText}/>
+
             </Grid>
-        {/* <h1 style={{fontSize:'2.75em', fontWeight:'lighter'}}>List of itineraries</h1> */}
+
         <Grid container spacing={6}
           justifyContent="center"
           alignItems="center"
         >
 
-        {itineraries.map((itinerary) => {
+        {filteredItineraries.map((itinerary) => {
           return(
             <Grid item xs={12} sm={12} md={6} lg={4} xl={4}
               display='flex'

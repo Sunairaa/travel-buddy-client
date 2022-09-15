@@ -11,7 +11,7 @@ function PageNotFound() {
       <div id="info">
         <h1 style={{fontSize:'2.75em', fontWeight:'lighter'}}>Page not found</h1>
         <Link to={'/'}>
-          <h3 style={{fontWeight:'lighter'}}>Go back to the homepage</h3>
+          <h3 style={{fontWeight:'lighter'}}>Go back</h3>
         </Link>
       </div>
     </div >
