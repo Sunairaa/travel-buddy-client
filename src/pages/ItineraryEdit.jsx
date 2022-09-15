@@ -40,6 +40,9 @@ import Countries from '../Data/countries.json';
 import service from "../api/service";
 import LoadingButton from '@mui/lab/LoadingButton';
 import AddContributorFields from '../components/AddContributorFields';
+import { useContext } from "react";                     
+import { AuthContext } from "../context/auth.context";  
+
 const API_URL = process.env.REACT_APP_API_URL || "https://long-lime-bat-hose.cyclic.app";
 const ariaLabel = { 'aria-label': 'description' };
 
@@ -86,6 +89,9 @@ function ItineraryEdit() {
     const [disablePublish, setDisablePublish] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
     const [errorMessage, setErrorMessage] = useState(undefined);
+
+    const isLoggedIn = useContext(AuthContext).isLoggedIn;
+    const loggedInUser = useContext(AuthContext).user;
 
     const ref = useRef(null);
     
@@ -382,8 +388,7 @@ function ItineraryEdit() {
                     setContributorEmail(itineraryToEdit.contributor.email)
                     setContributorField(true)
                     setDisplayConfirmButton(false)
-                    if (itineraryToEdit.contributor._id != itineraryToEdit.user_id) {
-                        console.log("same same")
+                    if (isLoggedIn && loggedInUser._id !== itineraryToEdit.user._id) {
                         setHideRemoveBtn(true)
                     }
                 }
