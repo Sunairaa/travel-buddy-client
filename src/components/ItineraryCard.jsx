@@ -23,20 +23,20 @@ function ItineraryCard({title, cities, countries, user, imageUrl, notes, id}) {
             {title}
             </Typography>
         </Link>
-        <Typography variant="body2" color="text.secondary">
+        <div variant="body2" color="text.secondary">
         <Typography gutterBottom variant="h5" component="div">
             Countries
         </Typography >
             <ul style={{listStyleType:'none', padding:0, display:'flex', justifyContent:'center', marginBottom:'8.4px'}}>
               {countries.map((country) => {
                 return(
-                  <Chip sx={{mr:1}} label={country} />
+                  <Chip key={country} sx={{mr:1}} label={country} />
                 )
               })}
             </ul>
-        </Typography>
+        </div>
 
-        <Typography variant="body2" color="text.secondary">
+        <div variant="body2" color="text.secondary">
         <Typography gutterBottom variant="h5" component="div">
             Cities
         </Typography >
@@ -44,11 +44,11 @@ function ItineraryCard({title, cities, countries, user, imageUrl, notes, id}) {
               {cities.map((city) => {
                 return(
                   // <li>{city}</li>
-                  <Chip sx={{mr:1}} label={city} />
+                  <Chip key={city} sx={{mr:1}} label={city} />
                 )
               })}
             </ul>
-        </Typography>
+        </div>
         
         <Typography variant="body2" color="text.secondary" style={{mt: 4, textAlign:'end'}}>
           By: {user && user.name}

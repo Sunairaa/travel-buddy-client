@@ -39,7 +39,7 @@ export default function HeroSection() {
         variant="h5"
         sx={{ mb: 4, mt: { sx: 4, sm: 10 } }}
       >
-        A community of wonderful travellers to help and inspire the world of exploration.
+        A community of wonderful travellers to help and inspire the world of exploration
       </Typography>
       {isLoggedIn && 
         <Link to="/home">
