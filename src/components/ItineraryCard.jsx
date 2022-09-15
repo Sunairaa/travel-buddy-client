@@ -55,7 +55,6 @@ function ItineraryCard({title, cities, countries, user, imageUrl, notes, id, con
               })}
             </ul>
         </div>
-        </Typography>
 
         <Typography variant="body2" color="text.secondary" sx={{mt: 4, display:'flex', justifyContent:"space-between", alignItems: "center"}}>
         {isLoggedIn && loggedInUser._id === contributorId &&
