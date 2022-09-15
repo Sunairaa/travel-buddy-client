@@ -1,70 +1,51 @@
-# Getting Started with Create React App
+# Travel Buddy - Client
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
 
-## Available Scripts
+Travel Buddy as an app for plan travel perfectly. User can create their itineraries of their past or future trips and can share their experience so others can take advantage from them. User can aslo add general travel tips related to travel, hotel bookings, flights etc.
 
-In the project directory, you can run:
+## User Stories
 
-### `yarn start`
+-  **404:** As an anon/user I can see a 404 page if I try to reach a page that does not exist so that I know it's my fault.
+-  **Signup:** As an anon I can sign up in the app so that I can start creating and managing my itineraries.
+-  **Login:** As a user I can login to the app so that I can start creating and managing my itineraries.
+-  **Logout:** As a user I can logout from the app so no one else can modify my information.
+-  **Create itinerary** As a user I can create itinerary.
+-  **Update itinerary** As a user I can update my itinerary.
+-  **Delete itinerary** As a user I can delete my itinerary from my itineraries.
+-  **Public itinerary** As a non registered user I can only see list of public create itineraries.
+-  **Contributor to itinerary** As a user i can contributor to my itinerary so that contributor should be registered and can see and edit that itinerary.
+-  **Travel tips** As a user i can add general common trave realated tips and can filter only mine.
+-  **Check profile** As a user I can check my profile, can update profile picture and can check my itineraries from there.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Backlog
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- Add multiple contributor
+- Contributor should receive a invitation link.
+- Comment / review model
+- thumbs / like model.
+- Social authentication.
 
-### `yarn test`
+<br>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Links
 
-### `yarn build`
+### Trello/Kanban
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+[Link to your trello board](https://trello.com/b/FbfHT8EH/travel-buddy) 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Git
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The url to your repository and to your deployed project
 
-### `yarn eject`
+[Client repository Link](https://github.com/Sunairaa/travel-buddy-client)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+[Server repository Link](https://github.com/Sunairaa/travel-buddy-server)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+[Deployed App Link](https://travel-buddy-client.netlify.app/)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Slides
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+The url to your presentation slides
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[Slides Link](https://docs.google.com/presentation/d/1XsC16eyqehPcwO6THRFyBN-j5KP5g2K9aktBAi2ZV_g/edit#slide=id.g15526f35b1a_0_10)
