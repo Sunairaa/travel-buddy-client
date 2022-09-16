@@ -1,4 +1,4 @@
-# Travel Buddy - Client
+# Travel Buddy - Client ✈️ 
 
 ## Description
 
@@ -69,12 +69,10 @@ Travel Buddy is an app for managing or exploring travel plans. Users can create 
   - auth.login(user)
   - auth.signup(user)
   - auth.logout()
-
-- Backlog Service
   
 <br>
 
-User model
+### User model
 
 ```javascript
 {
@@ -86,7 +84,7 @@ User model
 }
 ```
 
-Itinerary model
+### Itinerary model
 
 ```javascript
 {
@@ -105,7 +103,7 @@ Itinerary model
 }
 ```
 
-Travel Tip model
+### Travel Tip model
 
 ```javascript
 {
@@ -153,20 +151,16 @@ Travel Tip model
 
 ### Trello/Kanban
 
-[Link to your trello board](https://trello.com/b/FbfHT8EH/travel-buddy) 
+[Travel Buddy Trello](https://trello.com/b/FbfHT8EH/travel-buddy) 
 
 ### Git
 
-The url to your repository and to your deployed project
+[Travel Buddy Client repository](https://github.com/Sunairaa/travel-buddy-client)
 
-[Client repository Link](https://github.com/Sunairaa/travel-buddy-client)
-
-[Server repository Link](https://github.com/Sunairaa/travel-buddy-server)
+[Travel Buddy Server repository Link](https://github.com/Sunairaa/travel-buddy-server)
 
 [Deployed App Link](https://travel-buddy-client.netlify.app/)
 
 ### Slides
 
-The url to your presentation slides
-
-[Slides Link](https://docs.google.com/presentation/d/1XsC16eyqehPcwO6THRFyBN-j5KP5g2K9aktBAi2ZV_g/edit#slide=id.g15526f35b1a_0_10)
+[Travel Buddy Slides](https://docs.google.com/presentation/d/1XsC16eyqehPcwO6THRFyBN-j5KP5g2K9aktBAi2ZV_g/edit#slide=id.g15526f35b1a_0_10)
