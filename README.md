@@ -2,35 +2,39 @@
 
 ## Description
 
-Travel Buddy as an app for plan travel perfectly. User can create their itineraries of their past or future trips and can share their experience so others can take advantage from them. User can aslo add general travel tips related to travel, hotel bookings, flights etc.
+Travel Buddy is an app for managing or exploring travel plans. Users can create public or private itineraries of their trips and can share their experiences so others can take advantage of them. Users can also add general travel tips related to travel, hotel bookings, flights, activities, etc.
 
 ## User Stories
 
--  **404:** As an anon/user I can see a 404 page if I try to reach a page that does not exist so that I know it's my fault.
--  **Signup:** As an anon I can sign up in the app so that I can start creating and managing my itineraries.
--  **Login:** As a user I can login to the app so that I can start creating and managing my itineraries.
--  **Logout:** As a user I can logout from the app so no one else can modify my information.
--  **Create itinerary:** As a user I can create itinerary.
+-  **Create itinerary:** As a user I can create an itinerary.
 -  **Update itinerary:** As a user I can update my itinerary.
 -  **Delete itinerary:** As a user I can delete my itinerary from my itineraries.
--  **Public itinerary:** As a non registered user I can only see list of public create itineraries.
--  **Contributor to itinerary:** As a user i can contributor to my itinerary so that contributor should be registered and can see and edit that itinerary.
--  **Travel tips:** As a user i can add general common trave realated tips and can filter only mine.
--  **Check profile:** As a user I can check my profile, can update profile picture and can check my itineraries from there.
-
+-  **Public itinerary:** As a non-registered user I can only see a list of public create itineraries.
+-  **Contributor to the itinerary:** As a user I can contribute to my itinerary so that contributor should be registered and can see and edit that itinerary.
+-  **Travel tips:** As a user I can add general common travel-related tips and can filter only mine.
+-  **Check profile:** As a user I can check my profile can update my profile picture and can check my itineraries from there.
 
 <br>
-
 
 # Client / Frontend
 
 ## React Router Routes (React App)
 | Path                      | Component                      | Permissions | Behavior                                                     |
 | ------------------------- | --------------------           | ----------- | ------------------------------------------------------------ |
-| `/`                       | Landing Page                   | public `<Route>`            | Index Page                                        |
-| `/signup`                 | SignupPage                     | anon only  `<IsAnon>`    | Signup form, link to login, navigate to home page after signup |
-| `/login`                  | LoginPage                      | anon only `<IsAnon>`     | Login form, link to signup, navigate to home page after login  |
+| `/`                       | Index                   | public `<Route>`            | Index Page                                        |
+| `/signup`                 | Signup                     | anon only  `<IsAnon>`    | Signup form, link to login, navigate to home page after signup |
+| `/login`                  | Login                      | anon only `<IsAnon>`     | Login form, link to signup, navigate to home page after login  |
 | `/logout`                 | n/a                            | user only `<IsPrivate>`  | Navigate to landing page after logout, expire session             |
+| `/api/profile`                 | Profile                            | user only `<IsPrivate>`  | User can update their profile picture.             |
+| `/api/itineraries`                 | Itineraries                           | public `<Route>`  | Public can only see all public visible itineraries             |
+| `/api/itineraries`                 | NewItineraries                            | user only `<IsPrivate>`  | user can create public or private itineraries. itineraries             |
+| `/api/itineraries/:id`                 | ItinerariesEdit                           | user only `<IsPrivate>`  | Only owner / contributor has access to update itinerary.|
+| `/api/itineraries/:id`                 | ItinerariesDetails                          | user only `<IsPrivate>`  | Only registered user can see details.|
+| `/api/my-itineraries`                 | UserSpecificItineraries                          | user only `<IsPrivate>`  | User can see list of his own itineraries.|
+| `/api/traveltips`                 | TravelTips                          | public `<Route>`  | User can see list of all travel tips and filter own travel tips if logged in.|
+| `/api/traveltips`                 | NewTravelTip                          | user only `<IsPrivate>`  | User can create new travel tip.|
+
+<br>
           
 ## Components
 - Navbar
@@ -40,20 +44,21 @@ Travel Buddy as an app for plan travel perfectly. User can create their itinerar
 - Profile
 - Hero Section
 - Feature Section
-- Create new itinerary
+- Create itinerary
 - Update itinerary
 - Itinerary Detail
-- List Itinerary
+- Itinerary list
 - Travel tips
 - 404 Page not found
 
 
 ## Backlog
 
-- Add multiple contributor
+- Add multiple contributors.
 - Contributor should receive a invitation link.
 - Comment / review model
-- thumbs / like model.
+- thumbs up / like model.
+- Sign up email verification
 - Social authentication.
 
 ## Services
@@ -79,7 +84,6 @@ User model
 }
 ```
 
-
 Itinerary model
 
 ```javascript
@@ -98,7 +102,6 @@ Itinerary model
   contributor: { type: Schema.Types.ObjectId, ref: "User" }
 }
 ```
-
 
 Travel Tip model
 
