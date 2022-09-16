@@ -30,9 +30,11 @@ Travel Buddy is an app for managing or exploring travel plans. Users can create 
 | `/api/itineraries`                 | NewItineraries                            | user only `<IsPrivate>`  | user can create public or private itineraries. itineraries             |
 | `/api/itineraries/:id`                 | ItinerariesEdit                           | user only `<IsPrivate>`  | Only owner / contributor has access to update itinerary.|
 | `/api/itineraries/:id`                 | ItinerariesDetails                          | user only `<IsPrivate>`  | Only registered user can see details.|
+| `/api/itineraries/:id`                 | ItinerariesDetails                          | user only `<IsPrivate>`  | Only owner has access to delete his own itinerary.|
 | `/api/my-itineraries`                 | UserSpecificItineraries                          | user only `<IsPrivate>`  | User can see list of his own itineraries.|
 | `/api/traveltips`                 | TravelTips                          | public `<Route>`  | User can see list of all travel tips and filter own travel tips if logged in.|
 | `/api/traveltips`                 | NewTravelTip                          | user only `<IsPrivate>`  | User can create new travel tip.|
+| `/api/traveltips/:id`                 | TravelTips                          | user only `<IsPrivate>`  | User can delete his own travel tip.|
 
 <br>
           
@@ -63,7 +65,7 @@ Travel Buddy is an app for managing or exploring travel plans. Users can create 
 
 ## Services
 
-- Auth Service
+- Auth Service - Authenticatin with JWT
   - auth.login(user)
   - auth.signup(user)
   - auth.logout()
@@ -125,10 +127,25 @@ Travel Tip model
 
 | HTTP Method | URL                         | Request Body                 | Success status | Error Status | Description                                                  |
 | ----------- | --------------------------- | ---------------------------- | -------------- | ------------ | ------------------------------------------------------------ |
-| GET         | `/auth/profile    `           | Saved session                | 200            | 404          | Check if user is logged in and return profile page           |
+| GET         | `/auth/profile    `           | Authorization request header                | 200            | 404          | Check if user is logged in and return profile page           |
+| PUT         | `/auth/profile    `           | Authorization request header                | 200            | 404          | Check if user is logged in and return profile page so user can update only profile image.         |
 | POST        | `/auth/signup`                | {name, email, password}      | 201            | 404          | Checks if fields not empty (422) and user not exists (409), then create user with encrypted password, and store user in session |
-| POST        | `/auth/login`                 | {username, password}         | 200            | 401          | Checks if fields not empty (422), if user exists (404), and if password matches (404), then stores user in session    |
+| POST        | `/auth/login`                 | {email, password}         | 200            | 401          | Checks if fields not empty (422), if user exists (404), and if password matches (404), generate jwt token and then stores user token in local storage    |
 | POST        | `/auth/logout`                | (empty)                      | 204            | 400          | Logs out the user                                          |
+| GET        | `/auth/verify`                | Authorization request header                     | 200           | 500          | Returns the user object.  
+| GET        | `/user/:email`                | (empty)                     | 200           | 500          | Returns user with that email.
+| GET        | `/api/my-itineraries`                | Authorization request header                     | 200           | 500          | Returns user specific itineraries.
+| GET        | `/api/my-itineraries`                | Authorization request header                     | 200           | 500          | Returns user specific itineraries.   |
+| GET        | `/api/itineraries`                | (empty)                     | 200           | 500          | Returns only public itineraries.   |
+| POST       | `/api/itineraries`                | { isPublic, title, duration,imageUrl, countries, cities, flightDetails, hotelDetails, activities, notes, contributorEmail}                     | 200           | 500          | Returns newly created itinerary.   |
+| GET       | `/api/itineraries/:id`                | (empty)                     | 200           | 500          | Returns itinerary with specific id.   |
+| PUT       | `/api/itineraries/:id`                | { isPublic, title, duration, imageUrl, countries, cities, flightDetails, hotelDetails, activities, notes, user, contributorEmail}   | 200           | 500          | Only owne can update and it returns updated itinerary.   |
+| DELETE      | `/api/itineraries/:id`                | { isPublic, title, duration, imageUrl, countries, cities, flightDetails, hotelDetails, activities, notes, user, contributorEmail}   | 200           | 500          | Only owner can delete itinerary.  |
+| POST      | `/api/upload`                | { image }   | 200           | 500          | it receives the image, sends it to Cloudinary via the fileUploader and returns the image URL. |
+| GET        | `/api/traveltips`                | (empty)                     | 200           | 500          | Returns all travel tips list.   |
+| POST        | `/api/traveltips`                | { title, description, category }                     | 200           | 500          | Get user data from req.payload and returns newly created travel tip.   |
+| DELETE        | `/api/traveltips/:id`                |                      | 200           | 500          | Only owner can delete travel tip.   |
+
 
 <br>
 
